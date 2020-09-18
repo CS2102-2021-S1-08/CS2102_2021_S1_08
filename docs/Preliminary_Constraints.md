@@ -26,7 +26,7 @@ Note: png and pdf of ER diagram is in the same folder
 8. An Availability contains a start date, an end date, the category of the pet that the care taker can take care of, and the daily price
 9. Care Takers can create and advertise their Availability 
     - Identity dependency
-    - Start + end date as partial key
+    - Start + end date + category as partial key
 10. Availabilities with the same category should not have overlapping start/end dates 
     - Cannot be reflected on ER diagram
 
@@ -62,10 +62,10 @@ Note: png and pdf of ER diagram is in the same folder
 
 22. A Care Taker is either a Full Timer, or Part Timer
     - Covering constraint on ISA hierarchy
-23. A Care Taker can choose to specify which Date they wish to take a Leave on
+23. A Full Timer can choose to specify which Date they wish to take a Leave on
     - Identity dependency
     - Date as partial key
-24. A Care Taker cannot create an Availability on days covered by their Leave
+24. A Full Timer cannot create an Availability on days covered by their Leave
 
 
 ## Care Taker Monthly Summary
