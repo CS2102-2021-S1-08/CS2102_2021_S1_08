@@ -27,61 +27,63 @@ Note: png and pdf of ER diagram is in the same folder
 9. Care Takers can create and advertise their Availability 
     - Identity dependency
     - Start + end date as partial key
+10. Availabilities with the same category should not have overlapping start/end dates 
+    - Cannot be reflected on ER diagram
 
 ## Bid and Order
 
-10. A Pet Owner can bid for an Availability for their Pet
-11. A Bid consists of a start date and end date that falls within that of the availability 
+11. A Pet Owner can bid for an Availability for their Pet
+12. A Bid consists of a start date and end date that falls within that of the availability 
     - i.e. Pet owner cannot choose a date the Care Taker is unavailable for
-12. A Bid is only valid if the category of the Pet matches the category of the Availability
+13. A Bid is only valid if the category of the Pet matches the category of the Availability
     - Cannot be reflected on ER diagram
-13. A Care Taker can only accept a single bid per availability. The bid accepted by the Care Taker is also known as a successful bid
+14. A Care Taker can only accept a single bid per availability. The bid accepted by the Care Taker is also known as a successful bid
     - Cannot be reflected on ER diagram
-14. Successful bids are converted into Orders
+15. Successful bids are converted into Orders
     - Cannot be reflected on ER diagram
-15. Unsuccessful bids are discarded
+16. Unsuccessful bids are discarded
     - Cannot be reflected on ER diagram
-16. The Availability is removed once a bid is successful. New Availabilities for days excluded by the successful bid are created
+17. The Availability is removed once a bid is successful. New Availabilities for days excluded by the successful bid are created
     - For instance:
       - An Availability has start date Monday and end date Friday
       - The successful Bid has start date Tuesday and end date Thursday
       - A new Availability with start and end dates Monday is created
       - A new Availability with start and end dates Friday is created
     - Cannot be reflected on ER diagram
-17. An Order takes place between a Pet Owner and a Care Taker for a Pet after a successful bid 
-18. An Order consists of the start date and end date as specified by the successful bid, as well as the daily price as stated in the Care Taker's Availability
+18. An Order takes place between a Pet Owner and a Care Taker for a Pet after a successful bid 
+19. An Order consists of the start date and end date as specified by the successful bid, as well as the daily price as stated in the Care Taker's Availability
 
 ## Review
 
-19. A Pet Owner can post a review on a Care Taker based on an Order
-20. A review consists of a rating from 0 to 5 stars, and the text comment
+20. A Pet Owner can post a review on a Care Taker based on an Order
+21. A review consists of a rating from 0 to 5 stars, and the text comment
 
 ## Care Taker Working Status
 
-21. A Care Taker is either a Full Timer, or Part Timer
+22. A Care Taker is either a Full Timer, or Part Timer
     - Covering constraint on ISA hierarchy
-22. A Care Taker can choose to specify which Date they wish to take a Leave on
+23. A Care Taker can choose to specify which Date they wish to take a Leave on
     - Identity dependency
     - Date as partial key
-23. A Care Taker cannot create an Availability on days covered by their Leave
+24. A Care Taker cannot create an Availability on days covered by their Leave
 
 
 ## Care Taker Monthly Summary
 
-24. At the start of each Month, a Monthly Summary of the previous Month is created
+25. At the start of each Month, a Monthly Summary of the previous Month is created
     - Cannot be reflected on ER diagram
-25. Every Care Taker has a Monthly Summary for each Month they worked in
+26. Every Care Taker has a Monthly Summary for each Month they worked in
     - Identity dependency
     - Year and Month as partial key
-26. A Monthly Summary also consists of the number of pet-days and salary of the Care Taker
-27. Pet-days are calculated by checking each Order that has a start or end date belonging to that month, and then adding the number of days that belong in that month
+27. A Monthly Summary also consists of the number of pet-days and salary of the Care Taker
+28. Pet-days are calculated by checking each Order that has a start or end date belonging to that month, and then adding the number of days that belong in that month
     - Case 1: start date and end date within month
       - Add number of days from start to end
     - Case 2: start date within month, end date not within month
       - Add number of days from start date to last date of month
     - Case 3: start date not within month, end date within month
       - Add number of days from start date of month to end date
-28. Salary is calculated by checking each Order that has a start or end date belonging to that month, and then adding the daily price multiplied by the number of days that belonged in that Month. The salary is also affected by whether the Care Taker is a Full Timer of Part Timer
+29. Salary is calculated by checking each Order that has a start or end date belonging to that month, and then adding the daily price multiplied by the number of days that belonged in that Month. The salary is also affected by whether the Care Taker is a Full Timer of Part Timer
     - Case Full Timer: Care Taker takes 85% of price
       - It does not make sense that a full timer takes a fixed rate for the first 60 pet-days. Alternative is to provide a better incentive than part timers
     - Case Part Timer: Care Taker takes 75% of price
@@ -89,8 +91,8 @@ Note: png and pdf of ER diagram is in the same folder
 
 ## On Pricing
 
-29. The base price of different Categories of pet should be recorded in a list, and can be modified by PCS Admin at any time
+30. The base price of different Categories of pet should be recorded in a list, and can be modified by PCS Admin at any time
     - No way to show only PCS Admin can modify the table
-30. The daily price of an Availability is determined by a variety of factors, such as the base price of the category and the average rating of the Care Taker
+31. The daily price of an Availability is determined by a variety of factors, such as the base price of the category and the average rating of the Care Taker
     - E.g. (Base Price of Category) + (Rating * 4)
     - Base Price to be obtained from the base price list
