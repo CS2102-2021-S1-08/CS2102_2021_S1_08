@@ -11,7 +11,7 @@ Note: png and pdf of ER diagram is in the same folder
 2. An account must consist of username and password
 3. A User is either a Pet Owner, or Care Taker, or both
     - Covering + Overlap constraint on ISA hierarchy
-4. A User must contain a profile
+4. A User must consist of a name and profile
 
 ## Pet
 
