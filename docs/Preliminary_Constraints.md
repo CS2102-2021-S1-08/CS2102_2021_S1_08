@@ -67,7 +67,8 @@ Note: png and pdf of ER diagram is in the same folder
 ## Care Taker Pet Limit
 
 1. A Care Taker cannot take care of more than 5 Pets on any single day
-    - For each day specified on a bid, the database can check if there are more than 5 Orders active on that day 
+    - For each day specified on a bid, the database can check if there are 5 or more Orders active on that day
+    - If there are 5 or more Orders, the Care Taker cannot accept the bid. Else, the Care Taker can accept the bid
     - Cannot be reflected on ER diagram
 
 ## Care Taker Monthly Summary
