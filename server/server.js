@@ -17,4 +17,10 @@ app.get('/status', (req, res) => {
     })
 });
 
+app.post('/register', (req, res) => {
+    res.send({
+        message: 'User registered'
+    })
+});
+
 app.listen(process.env.PORT || 8081);
