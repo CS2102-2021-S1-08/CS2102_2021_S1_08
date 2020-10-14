@@ -45,7 +45,7 @@ app.get('/users/dashboard', checkNotAuthenticated, (req, res) => {
 })
 
 app.post('/users/register', async (req, res) => {
-    let {username, password, confirm_password} = req.body
+    let { username, password, confirm_password } = req.body
 
     console.log({
         username,
@@ -55,38 +55,38 @@ app.post('/users/register', async (req, res) => {
 
     let errors = [];
 
-    if (!username  || !password || !confirm_password) {
-        errors.push({message: "Please enter all fields"})
+    if (!username || !password || !confirm_password) {
+        errors.push({ message: "Please enter all fields" })
     }
 
     if (password.length < 6) {
-        errors.push({message: "Password should be at least 6 characters long"})
+        errors.push({ message: "Password should be at least 6 characters long" })
     }
 
     if (password != confirm_password) {
-        errors.push({message: "Password do not match"})
+        errors.push({ message: "Password do not match" })
     }
 
-    if(errors.length > 0) {
+    if (errors.length > 0) {
         res.render('register', { errors })
     } else {
         //passed
         pool.query(
             `SELECT * FROM users
             WHERE username = $1`,
-          [username],
-          (err, results) => {
-            if (err) {
-              console.log(err)
-            }
-            console.log(results.rows)
-            
-            if(results.rows.length > 0) {
-                errors.push({message: "The username is already taken"})
-                res.render('register', { errors })
-            } else {
-                pool.query(
-                    `INSERT INTO users (username, password)
+            [username],
+            (err, results) => {
+                if (err) {
+                    console.log(err)
+                }
+                console.log(results.rows)
+
+                if (results.rows.length > 0) {
+                    errors.push({ message: "The username is already taken" })
+                    res.render('register', { errors })
+                } else {
+                    pool.query(
+                        `INSERT INTO users (username, password)
                     VALUES ($1, $2)
                     RETURNING username, password`, [username, password], (err, results) => {
                         if (err) {
@@ -96,8 +96,8 @@ app.post('/users/register', async (req, res) => {
                         req.flash('success_msg', "You are now registered. Please log in")
                         res.redirect('/users/login')
                     }
-                )
-            }
+                    )
+                }
 
             }
         )
