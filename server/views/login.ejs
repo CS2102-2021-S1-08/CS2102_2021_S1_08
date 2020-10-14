@@ -7,9 +7,22 @@
     <title>Document</title>
 </head>
 <body>
+
     <h1>Login</h1>
 
-    <form action = "/users/register" method="POST">
+    <ul>
+        <% if(messages.success_msg) { %>
+            <li><%= messages.success_msg %></li>
+        <% } %>
+    </ul>
+
+    <ul>
+        <% if(messages.error) { %>
+            <li><%= messages.error %></li>
+        <% } %>
+    </ul>
+
+    <form action = "/users/login" method="POST">
         <div>
             <input 
             type="text" 
