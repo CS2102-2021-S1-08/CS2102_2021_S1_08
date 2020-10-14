@@ -16,3 +16,8 @@ How to run the server:
 5. edit the .env file to your database specifics
 6. run `npm start dev`
 7. the server will be running on localhost port 8080
+
+* tested on:
+node version 12
+postgres version 13
+npm version 6
