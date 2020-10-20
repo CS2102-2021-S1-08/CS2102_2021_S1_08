@@ -6,8 +6,6 @@ This is a project for the module CS2102 conducted at NUS for Semester 1 of AY202
 
 The project consists of developing a pet caring service application that allows pet owner to search for care takers for their pets for certain periods of time.
 
-Preliminary Constraints and ER Diagram are in /docs folder
-
 How to run the server:
 1. clone the repo and all that stuff, change directory to /server
 2. run `npm install`
