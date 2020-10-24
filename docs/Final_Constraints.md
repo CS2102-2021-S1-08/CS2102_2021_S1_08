@@ -1,6 +1,6 @@
 # Preliminary Constraints
 
-![](Preliminary_ER_Diagram.png)
+![](Final_ER_Diagram.png)
 
 Note: png and pdf of ER diagram is in the same folder
 
