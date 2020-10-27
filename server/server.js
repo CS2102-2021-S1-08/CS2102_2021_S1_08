@@ -4,7 +4,6 @@ const session = require("express-session")
 const flash = require("express-flash")
 const passport = require("passport")
 const initializePassport = require("./passportConfig")
-const routes = require("./routes");
 
 initializePassport(passport)
 
@@ -26,7 +25,8 @@ app.get('/', (req, res) => {
     res.render('index')
 })
 
-app.use('/users', routes);
+// TODO rename /users to /auth
+app.use('/users', require("./routes/auth"));
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)

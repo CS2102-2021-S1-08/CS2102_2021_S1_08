@@ -1,31 +1,38 @@
+/**
+ * Router for authentication
+ */
+
+const router = require("express").Router()
 const passport = require("passport")
+const { checkAuthenticated, checkNotAuthenticated } = require("../commons/auth")
 const { pool } = require("../dbConfig")
 
-exports.loginGet = function (req, res) {
+const loginGet = function (req, res) {
     res.render('login')
 }
 
-exports.loginPost = passport.authenticate('local', {
+// TODO rename /users to /auth
+const loginPost = passport.authenticate('local', {
     successRedirect: '/users/dashboard',
     failureRedirect: '/users/login',
     failureFlash: true
 })
 
-exports.logoutGet = function (req, res) {
+const logoutGet = function (req, res) {
     req.logOut()
     req.flash('success_msg', 'You have logged out')
     res.redirect('/users/login')
 }
 
-exports.dashboardGet = function (req, res) {
+const dashboardGet = function (req, res) {
     res.render("dashboard", { user: req.user.username })
 }
 
-exports.registerGet = function (req, res) {
+const registerGet = function (req, res) {
     res.render('register')
 }
 
-exports.registerPost = async function (req, res) {
+const registerPost = async function (req, res) {
     let { username, password, confirm_password } = req.body
 
     console.log({
@@ -84,3 +91,16 @@ exports.registerPost = async function (req, res) {
         )
     }
 }
+
+router.route('/login')
+    .get(checkAuthenticated, loginGet)
+    .post(loginPost)
+router.route('/logout')
+    .get(logoutGet)
+router.route('/register')
+    .get(checkAuthenticated, registerGet)
+    .post(registerPost)
+router.route('/dashboard')
+    .get(checkNotAuthenticated, dashboardGet)
+
+module.exports = router;
