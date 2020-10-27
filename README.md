@@ -6,16 +6,17 @@ This is a project for the module CS2102 conducted at NUS for Semester 1 of AY202
 
 The project consists of developing a pet caring service application that allows pet owner to search for care takers for their pets for certain periods of time.
 
-How to run the server:
-1. clone the repo and all that stuff, change directory to /server
-2. run `npm install`
-3. launch postgres if you have not done so using `pg_ctl -D "<path to postgreSQL\version\data>" start` example: `pg_ctl -D "E:\Program Files\PostgreSQL\13\data" start`
-4. create required schema by using the command `-U <DB_USER> -d <DB_DATABASE> -f <path to database.sql (in server folder of this repo)>` example: `-U person -d postgres -f E:\Users\me\Desktop\CS2102_2021_S1_08\server\database.sql`
-5. edit the .env file to your database specifics
-6. run `npm start dev`
-7. the server will be running on localhost port 8080
+## Prerequisites
 
-* tested on:
-node version 12
-postgres version 13
-npm version 6
+- Node 12.18.0
+- Postgres 11/12/13
+
+## Setup
+
+1. Clone this repository
+2. Run `npm install`
+3. Create a postgres database to be used for the application 
+3. Edit the `.env` file for database connection specifics
+4. create required schema by using the command `-U <DB_USER> -d <DB_DATABASE> -f <path to database.sql (in server folder of this repo)>` example: `-U person -d postgres -f E:\Users\me\Desktop\CS2102_2021_S1_08\server\database.sql`
+5. run `npm start dev`
+6. the server will be running on localhost port 8080
