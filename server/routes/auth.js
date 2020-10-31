@@ -7,6 +7,9 @@ const passport = require("passport")
 const { checkAuthenticated, checkNotAuthenticated } = require("../commons/auth")
 const { pool } = require("../dbConfig")
 const dashboard = require("./dashboard")
+const petOwners = require("../models/petOwners")
+const careTakers = require("../models/careTakers")
+const pcsAdmins = require("../models/pcsAdmins")
 
 const loginGet = function (req, res) {
     res.render('login')
@@ -30,12 +33,13 @@ const registerGet = function (req, res) {
 }
 
 const registerPost = async function (req, res) {
-    let { username, password, confirm_password } = req.body
+    let { username, password, confirm_password, type } = req.body
 
     console.log({
         username,
         password,
-        confirm_password
+        confirm_password,
+        type
     })
 
     let errors = []
@@ -56,36 +60,71 @@ const registerPost = async function (req, res) {
         res.render('register', { errors })
     } else {
         //passed
-        pool.query(
-            `SELECT * FROM users
-            WHERE username = $1`,
-            [username],
-            (err, results) => {
-                if (err) {
-                    console.log(err)
-                }
-                console.log(results.rows)
-
-                if (results.rows.length > 0) {
-                    errors.push({ message: "The username is already taken" })
-                    res.render('register', { errors })
-                } else {
-                    pool.query(
-                        `INSERT INTO users (username, password)
-                    VALUES ($1, $2)
-                    RETURNING username, password`, [username, password], (err, results) => {
-                        if (err) {
-                            console.log(err)
-                        }
-                        console.log(results.rows)
-                        req.flash('success_msg', "You are now registered. Please log in")
-                        res.redirect('/users/login')
+        if (type == 'admin') {
+            pool.query(
+                `SELECT * FROM pcs_admin
+                WHERE username = $1`,
+                [username],
+                (err, results) => {
+                    if (err) {
+                        console.log(err)
                     }
-                    )
-                }
+                    console.log(results.rows)
 
-            }
-        )
+                    if (results.rows.length > 0) {
+                        errors.push({ message: "The username is already taken" })
+                        res.render('register', { errors })
+                    } else {
+                        pcsAdmins.putPcsAdmin(username, password)
+                    }
+                }
+            )
+        } else {
+            pool.query(
+                `SELECT * FROM users
+                WHERE username = $1`,
+                [username],
+                (err, results) => {
+                    if (err) {
+                        console.log(err)
+                    }
+                    console.log(results.rows)
+
+                    if (results.rows.length > 0) {
+                        errors.push({ message: "The username is already taken" })
+                        res.render('register', { errors })
+                    } else {
+                        pool.query(
+                            `INSERT INTO users (username, password)
+                        VALUES ($1, $2)
+                        RETURNING username, password`, [username, password], (err, results) => {
+                            if (err) {
+                                console.log(err)
+                            }
+                            console.log(results.rows)
+                            req.flash('success_msg', "You are now registered. Please log in")
+                            res.redirect('/users/login')
+                        }
+                        )
+
+                        switch (type) {
+                            case 'petOwner':
+                                petOwners.putPetOwner(username)
+                                break;
+                            case 'careTaker':
+                                careTakers.putCareTaker(username)
+                                break;
+                            case 'both':
+                                petOwners.putPetOwner(username)
+                                careTakers.putCareTaker(username)
+                                break;
+                        }
+                    }
+
+                }
+            )
+        }
+
     }
 }
 
