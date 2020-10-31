@@ -7,9 +7,9 @@ CREATE TABLE IF NOT EXISTS bids (
 	start_date date,
 	end_date date,
 	category varchar(50),
-	pname varchar(50) REFERENCES pets(pname) ON DELETE CASCADE,
+	pname varchar(50) REFERENCES pet(pname),
 	review varchar,
-	rating int CHECK(
+	rating INT CHECK(
 		(rating IS NULL)
 		OR (
 			rating >= 0
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS bids (
 		)
 	),
 	successful boolean NOT NULL,
-	FOREIGN KEY (start_date, end_date, category) REFERENCES availability(start_date, end_date, category) ON DELETE CASCADE,
+	FOREIGN KEY (start_date, end_date, category) REFERENCES availabilities(start_date, end_date, category),
 	PRIMARY KEY (start_date, end_date, category, pname)
 );
 
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS availabilities {
 	username VARCHAR(50) REFERENCES care_taker(username),
 	start_date DATE,
 	end_date DATE,
-	category VARCHAR(50) REFEReNCES pet_category(category),
+	category VARCHAR(50) REFERENCES pet_category(category),
 	price INT,
 	PRIMARY KEY(username, start_date, end_date, category)
 };
