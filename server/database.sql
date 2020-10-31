@@ -3,6 +3,15 @@ CREATE TABLE IF NOT EXISTS users (
 	password varchar(200) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS pcs_admin (
+    username varchar(200) REFERENCES users(username)
+);
+
+CREATE TABLE IF NOT EXISTS pet_owner (
+    username varchar(200) REFERENCES users(username)
+);
+
+
 CREATE TABLE IF NOT EXISTS bids (
 	start_date date,
 	end_date date,
