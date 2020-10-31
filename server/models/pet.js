@@ -7,7 +7,7 @@ const { pool } = require("../dbConfig");
 // CREATE TABLE 
 
 // GET
-function getAllPets(username) {
+exports.get = function getAllPets(username) {
     return pool.query(`
         SELECT pname, profile, category, special_requirements
         FROM pets
