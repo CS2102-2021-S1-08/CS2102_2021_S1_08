@@ -7,16 +7,22 @@
 
 // GET
 function getBid(start_date, end_date, category, pname) {
-    // async/await
-    const query = 'SELECT * FROM bids WHERE start_date=$1, end_date=$2, category=$3, pname = $4'
-    const values = [start_date, end_date, category, pname]
+  let result = false
 
-    try {
-        const res = await client.query(query, values)
-        console.log(res.rows[0])
-    } catch (err) {
-        console.log(err.stack)
-    }
+  pool.query(`
+    SELECT *
+    FROM bids
+    WHERE start_date = $1::date, end_date = $2::date, category = $3::text, pname = $4::text
+    `,
+    [start_date, end_date, category, pname],
+    (err, res) => {
+      if (err) {
+        console.error('Error executing query', err.stack)
+      }
+      result = res;
+    })
+
+  return result
 }
 
 // POST
