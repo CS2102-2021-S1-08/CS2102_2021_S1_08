@@ -6,7 +6,9 @@ CREATE TABLE IF NOT EXISTS pcs_admins (
 
 CREATE TABLE IF NOT EXISTS users (
 	username varchar(200) PRIMARY KEY NOT NULL,
-	password varchar(200) NOT NULL
+	password varchar(200) NOT NULL,
+	name varchar(200) NOT NULL,
+	profile varchar(200)
 );
 
 CREATE TABLE IF NOT EXISTS pet_owners (
