@@ -1,6 +1,7 @@
 /**
  * Model for pets
- */ 
+ */
+const { pool } = require("../dbConfig");
 
 // TODO SQL QUERIES
 // CREATE TABLE 
