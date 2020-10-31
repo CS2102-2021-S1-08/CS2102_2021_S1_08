@@ -1,20 +1,19 @@
 /**
- * Model for pcs_admins
+ * Model for pet_owners
  */
 
-//CREATE TABLE IF NOT EXISTS pcs_admins (
-//	username varchar(200) PRIMARY KEY,
-//	password varchar(200) NOT NULL
+//CREATE TABLE IF NOT EXISTS pet_owners (
+//	username varchar(200) PRIMARY KEY NOT NULL REFERENCES users(username)
 //);
 
 const { pool } = require("../dbConfig");
 
 // GET
-function getPcsAdmin(username) {
+function getPetOwner(username) {
   let result = []
 
   pool.query(`
-      SELECT * FROM pcs_admins
+      SELECT * FROM pet_owners
       WHERE username = $1
       `,
     [username],
@@ -29,11 +28,11 @@ function getPcsAdmin(username) {
 }
 
 // PUT
-function putPcsAdmin(username, password) {
+function putPetOwner(username) {
   pool.query(
-    `INSERT INTO users (username, password)
-    VALUES ($1, $2)
-    RETURNING username, password`, [username, password],
+    `INSERT INTO pet_owners (username)
+    VALUES ($1)
+    RETURNING username`, [username],
     (err, res) => {
       if (err) {
         console.error('Error executing query', err.stack)
@@ -45,5 +44,5 @@ function putPcsAdmin(username, password) {
 
 
 // DELETE
-exports.getPcsAdmin = getPcsAdmin;
-exports.putPcsAdmin = putPcsAdmin;
+exports.getPetOwner = getPetOwner;
+exports.putPetOwner = putPetOwner;
