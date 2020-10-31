@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS base_prices (
 );
 
 CREATE TABLE IF NOT EXISTS pets (
-	username varchar(200) REFERENCES pet_owner(username) ON DELETE CASCADE,
+	username varchar(200) REFERENCES pet_owners(username) ON DELETE CASCADE,
 	pname varchar(200) NOT NULL,
 	profile text,
 	category varchar(200) REFERENCES base_prices(category),
@@ -33,20 +33,20 @@ CREATE TABLE IF NOT EXISTS pets (
 	PRIMARY KEY (username, pname)
 );
 
-CREATE TABLE IF NOT EXISTS availabilities {
-	username varchar(200) NOT NULL REFERENCES care_taker(username),
+CREATE TABLE IF NOT EXISTS availabilities (
+	username varchar(200) NOT NULL REFERENCES care_takers(username),
 	start_date date NOT NULL,
 	end_date date NOT NULL CHECK (start_date <= end_date),
-	category varchar(200) REFERENCES pet_category(category),
+	category varchar(200) REFERENCES base_prices(category),
 	price int,
 	PRIMARY KEY(username, start_date, end_date, category)
-};
+);
 
 CREATE TABLE IF NOT EXISTS bids (
 	start_date date,
 	end_date date,
 	category varchar(50),
-	pname varchar(50) REFERENCES pet(pname),
+	pname varchar(50) REFERENCES pets(pname),
 	bid_start_date date NOT NULL,
    	bid_end_date date NOT NULL,
 	review varchar,
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS bids (
 
 
 CREATE TABLE IF NOT EXISTS monthly_summary (
-	ctname varchar(50) REFERENCES care_taker (name) ON DELETE cascade,
+	ctname varchar(50) REFERENCES care_takers (name) ON DELETE cascade,
 	year INT CHECK(year >= 0),
 	month INT CHECK(
 		month >= 1
