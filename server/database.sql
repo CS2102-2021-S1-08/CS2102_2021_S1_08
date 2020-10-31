@@ -4,15 +4,17 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 CREATE TABLE IF NOT EXISTS bids (
-	start_date date REFERENCES availability(start_date),
-	end_date date REFERENCES availability(end_date),
-	category varchar(200) REFERENCES availability(category),
-	pname varchar(200) REFERENCES pet(pname),
+	start_date date,
+	end_date date,
+	category varchar(200),
+	pname varchar(200) REFERENCES pet(pname) ON DELETE CASCADE,
 	bid_start_date date NOT NULL,
 	bid_end_date date NOT NULL,
 	review varchar,
 	rating decimal(2,1),
 	successful boolean NOT NULL
+	(start_date, end_date, category) REFERENCES 
+		availability(start_date, end_date, category) ON DELETE CASCADE,
 	PRIMARY KEY (start_date, end_date, category, pname)
 );
 
