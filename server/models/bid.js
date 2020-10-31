@@ -7,7 +7,7 @@
 
 // GET
 function getBid(start_date, end_date, category, pname) {
-  let result = false
+  let result = []
 
   pool.query(`
     SELECT *
