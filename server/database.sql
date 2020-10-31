@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS pet (
 	pname  varchar(200),
 	username varchar(200) REFERENCES pet_owner(username),
 	profile varchar(200),
-	category varchar(50) REFERENCES pet_category(category),
+	category varchar(50) REFERENCES base_prices(category),
 	special varchar(200),
 	PRIMARY KEY (pname, username)
 );
