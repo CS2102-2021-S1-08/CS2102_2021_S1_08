@@ -6,9 +6,23 @@ const router = require("express").Router()
 const pets = require("../models/pet")
 const { checkAuthenticatedAsPetOwner } = require("../commons/auth")
 
+const getPets = function (req,res) {
+    pets
+    res.render("pets", { user: req.user.username })
+}
+
+const postPets = function (req, res) {
+
+}
+
+const deletePets = function (req, res) {
+
+}
 router.route('/')
-    .get(checkAuthenticatedAsPetOwner, pets.getAllPets)
-    .post(loginPost)
+    .get(checkAuthenticatedAsPetOwner, getPets)
+    .post(checkAuthenticatedAsPetOwner, postPets())
+    .delete(checkAuthenticatedAsPetOwner, deletePets())
+
 // TODO: use middleware checkAuthenticatedAsPetOwner
 // TODO: Pet Owner can view their pets (GET)
 // TODO: Pet Owner can add new pets (POST)

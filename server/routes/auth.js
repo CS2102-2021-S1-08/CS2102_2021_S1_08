@@ -25,10 +25,6 @@ const logoutGet = function (req, res) {
     res.redirect('/users/login')
 }
 
-const dashboardGet = function (req, res) {
-    res.render("dashboard", { user: req.user.username })
-}
-
 const registerGet = function (req, res) {
     res.render('register')
 }
