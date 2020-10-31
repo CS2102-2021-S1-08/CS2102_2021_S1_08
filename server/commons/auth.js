@@ -31,7 +31,7 @@ exports.checkNotAuthenticatedAsAdmin = function (req, res, next) {
   )
 }
 
-exports.checkAuthenticatedAsCareTaker = function (req, res, next) {
+exports.checkNotAuthenticatedAsCareTaker = function (req, res, next) {
   pool.query(`SELECT * FROM pcs_admins WHERE username = $1::text`,
     [req.user],
     (err, res) => {
@@ -44,7 +44,7 @@ exports.checkAuthenticatedAsCareTaker = function (req, res, next) {
   )
 }
 
-exports.checkAuthenticatedAsPetOwner = function (req, res, next) {
+exports.checkNotAuthenticatedAsPetOwner = function (req, res, next) {
   pool.query(`SELECT * FROM pcs_admins WHERE username = $1::text`,
     [req.user],
     (err, res) => {
