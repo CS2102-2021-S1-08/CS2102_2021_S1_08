@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <a href="/monthlysummary/admin">Back</a>
+    <h1>Dashboard</h1>
+    <h4>Hello admin <%= user %></h4>
+    <h4>Here are your stats for all caretakers (caretaker name, days worked, total salary):</h4>
+        <% for(let i=0; i < data.length; i++) { %>
+            <article>
+                <td><%= data[i]["ctname"] %></td>
+                <td><%= data[i]["year"] %></td>
+                <td><%= data[i]["month"] %></td>
+            </article>
+        <% } %>
+</body>
+
+</html>

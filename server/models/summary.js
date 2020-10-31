@@ -17,3 +17,14 @@ exports.getMonthlySummary = async function (ctname, year, month) {
     console.log(err.stack);
   }
 };
+
+exports.getAllMonthlySummary = async function () {
+  const query = "SELECT * FROM monthly_summary";
+
+  try {
+    const res = await pool.query(query);
+    return res.rows;
+  } catch (err) {
+    console.log(err.stack);
+  }
+};
