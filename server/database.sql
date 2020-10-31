@@ -37,9 +37,8 @@ CREATE TABLE IF NOT EXISTS monthly_summary (
 	pet_days INT CHECK(pet_days >= 0),
 	salary INT CHECK(salary >= 0),
 	PRIMARY KEY(ctname, year, month)
-
-
 )
+
 CREATE TABLE IF NOT EXISTS pet_owner (
     username varchar(200) REFERENCES users(username)
     PRIMARY KEY (username)
