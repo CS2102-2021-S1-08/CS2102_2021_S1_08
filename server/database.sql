@@ -74,4 +74,9 @@ CREATE TABLE IF NOT EXISTS monthly_summary (
 	pet_days INT CHECK(pet_days >= 0),
 	salary INT CHECK(salary >= 0),
 	PRIMARY KEY(ctname, year, month)
-)
+);
+
+CREATE TABLE IF OT EXISTS leaves (
+	username varchar(200) REFERENCES care_takers(username),
+	leave_date date NOT NULL
+);
