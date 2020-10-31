@@ -18,6 +18,26 @@ function getBid(start_date, end_date, category, pname) {
         console.log(err.stack)
     }
 }
+
 // POST
+function createBid(start_date, end_date, category, pname) {
+  let result = false
+
+  pool.query(`
+    INSERT INTO bids
+    VALUES ($1::date, $2::date, $3::text, $4::text, null, null, false)
+    `,
+    [username, start_date, end_date, category],
+    (err, res) => {
+      if (err) {
+        console.error('Error executing query', err.stack)
+      } else {
+        result = true
+      }
+    })
+
+  return result
+}
+
 // DELETE
 // function deleteBid(start_date, end_date, category, pname) {

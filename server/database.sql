@@ -8,8 +8,6 @@ CREATE TABLE IF NOT EXISTS bids (
 	end_date date,
 	category varchar(50),
 	pname varchar(50) REFERENCES pets(pname) ON DELETE CASCADE,
-	bid_start_date date NOT NULL,
-	bid_end_date date NOT NULL,
 	review varchar,
 	rating int CHECK(
 		(rating IS NULL)
