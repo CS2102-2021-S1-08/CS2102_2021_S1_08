@@ -9,5 +9,5 @@ CREATE TABLE IF NOT EXISTS MonthlySummary (
   month INT,
   petDays INT,
   salary INT,
-  PRIMARY KEY(year, month)
+  PRIMARY KEY(ctname, year, month)
 )
