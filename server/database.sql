@@ -18,7 +18,8 @@ CREATE TABLE IF NOT EXISTS bids (
 			AND rating <= 5
 		)
 	),
-	successful boolean NOT NULL FOREIGN KEY (start_date, end_date, category) REFERENCES availability(start_date, end_date, category) ON DELETE CASCADE,
+	successful boolean NOT NULL,
+	FOREIGN KEY (start_date, end_date, category) REFERENCES availability(start_date, end_date, category) ON DELETE CASCADE,
 	PRIMARY KEY (start_date, end_date, category, pname)
 );
 
