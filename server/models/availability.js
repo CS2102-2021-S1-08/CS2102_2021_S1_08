@@ -18,43 +18,27 @@ const { pool } = require("../dbConfig");
 
 // GET
 function getAllAvailabilities(username) {
-  let result = []
-
-  pool.query(`
+  return pool.query(`
     SELECT start_date, end_date, category, price
     FROM availabilities
     WHERE username = $1::text
     `,
-    [username],
-    (err, res) => {
-      if (err) {
-        console.error('Error executing query', err.stack)
-      }
-      result = res; 
-    })
-
-  return result
+    [username]
+  )
 }
 
 // POST
 function createAvailability(username, start_date, end_date, category) {
-  let result = false
-
-  pool.query(`
+  return pool.query(`
     INSERT INTO availabilities
     VALUES ($1::text, $2::date, $3::date, $4::text, 0)
     `,
-    [username, start_date, end_date, category],
-    (err, res) => {
-      if (err) {
-        console.error('Error executing query', err.stack)
-      } else {
-        result = true
-      }
-    })
-
-  return result
+    [username, start_date, end_date, category]
+  )
 }
 
 // DELETE
 // TODO
+
+exports.createAvailability = createAvailability;
+exports.getAllAvailabilities = getAllAvailabilities;
