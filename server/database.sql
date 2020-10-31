@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS users (
-	username  varchar(200) PRIMARY KEY NOT NULL,
+	username varchar(200) PRIMARY KEY NOT NULL,
 	password varchar(200) NOT NULL
 );
 
@@ -23,13 +23,13 @@ CREATE TABLE IF NOT EXISTS base_prices (
 	price int NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS onthlySummary (
-  ctname varchar(50) REFERENCES CareTaker (name) ON DELETE cascade,
-  year INT,
-  month INT,
-  petDays INT,
-  salary INT,
-  PRIMARY KEY(ctname, year, month)
+CREATE TABLE IF NOT EXISTS monthly_summary (
+	ctname varchar(50) REFERENCES care_taker (name) ON DELETE cascade,
+	year INT,
+	month INT,
+	pet_days INT,
+	salary INT,
+	PRIMARY KEY(ctname, year, month)
 )
 CREATE TABLE IF NOT EXISTS pet_owner (
     username varchar(200) REFERENCES users(username)
