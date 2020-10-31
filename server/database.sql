@@ -22,6 +22,8 @@ CREATE TABLE IF NOT EXISTS bids (
 	end_date date,
 	category varchar(50),
 	pname varchar(50) REFERENCES pet(pname),
+	bid_start_date date NOT NULL,
+   	bid_end_date date NOT NULL,
 	review varchar,
 	rating INT CHECK(
 		(rating IS NULL)
@@ -30,8 +32,9 @@ CREATE TABLE IF NOT EXISTS bids (
 			AND rating <= 5
 		)
 	),
-	successful boolean NOT NULL,
+	is_successful boolean NOT NULL,
 	FOREIGN KEY (start_date, end_date, category) REFERENCES availabilities(start_date, end_date, category),
+	CHECK ((bid_end_date <= end_date) AND (bid_start_date >= start_date) AND (bid_start_date <= bid_end_date)),
 	PRIMARY KEY (start_date, end_date, category, pname)
 );
 
