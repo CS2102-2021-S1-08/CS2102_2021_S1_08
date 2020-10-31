@@ -22,3 +22,12 @@ CREATE TABLE IF NOT EXISTS base_prices (
 	category varchar(200) PRIMARY KEY,
 	price decimal(5,2) NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS MonthlySummary (
+  ctname varchar(50) REFERENCES CareTaker (name) ON DELETE cascade,
+  year INT,
+  month INT,
+  petDays INT,
+  salary INT,
+  PRIMARY KEY(ctname, year, month)
+)
