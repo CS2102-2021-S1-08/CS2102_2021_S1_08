@@ -20,8 +20,8 @@ CREATE TABLE IF NOT EXISTS care_takers (
 );
 
 CREATE TABLE IF NOT EXISTS base_prices (
-	category varchar(200) PRIMARY KEY NOT NULL,
-	price int NOT NULL
+	category VARCHAR(200) PRIMARY KEY NOT NULL,
+	price INT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS pets (
@@ -43,13 +43,13 @@ CREATE TABLE IF NOT EXISTS availabilities {
 };
 
 CREATE TABLE IF NOT EXISTS bids (
-	start_date date,
-	end_date date,
-	category varchar(50),
-	pname varchar(50) REFERENCES pet(pname),
-	bid_start_date date NOT NULL,
-   	bid_end_date date NOT NULL,
-	review varchar,
+	start_date DATE,
+	end_date DATE,
+	category VARCHAR(50),
+	pname VARCHAR(50) REFERENCES pet(pname),
+	bid_start_date DATE NOT NULL,
+   	bid_end_date DATE NOT NULL,
+	review VARCHAR,
 	rating INT CHECK(
 		(rating IS NULL)
 		OR (
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS bids (
 			AND rating <= 5
 		)
 	),
-	is_successful boolean NOT NULL,
+	is_successful BOOLEAN NOT NULL,
 	FOREIGN KEY (start_date, end_date, category) REFERENCES availabilities(start_date, end_date, category),
 	CHECK ((bid_end_date <= end_date) AND (bid_start_date >= start_date) AND (bid_start_date <= bid_end_date)),
 	PRIMARY KEY (start_date, end_date, category, pname)
