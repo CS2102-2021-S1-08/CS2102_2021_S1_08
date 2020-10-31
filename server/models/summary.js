@@ -3,13 +3,12 @@
  */
 const { pool } = require("../dbConfig");
 
-// GET
-async function getMonthlySummary(ctname, year, month) {
+exports.getMonthlySummary = async function (ctname, year, month) {
   // async/await
   const query =
     "SELECT * \
-                    FROM monthly_summary \
-                    WHERE ctname=$1::text AND year=$2::int AND month=$3::int";
+    FROM monthly_summary \
+    WHERE ctname=$1::text AND year=$2::int AND month=$3::int";
   const values = [ctname, year, month];
 
   try {
@@ -18,4 +17,4 @@ async function getMonthlySummary(ctname, year, month) {
   } catch (err) {
     console.log(err.stack);
   }
-}
+};

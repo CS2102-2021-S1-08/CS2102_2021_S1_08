@@ -1,10 +1,12 @@
 const express = require("express");
 const app = express();
 const session = require("express-session");
+var bodyParser = require("body-parser");
 const flash = require("express-flash");
 const passport = require("passport");
 const initializePassport = require("./passportConfig");
 const authRouter = require("./routes/auth");
+const summaryRouter = require("./routes/summary");
 
 initializePassport(passport);
 
@@ -12,7 +14,10 @@ const PORT = process.env.PORT || 8080;
 
 app.set("views", "./views");
 app.set("view engine", "ejs");
-app.use(express.urlencoded({ extended: false }));
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+// parse application/json
+app.use(bodyParser.json());
 app.use(
   session({
     secret: "secret",
@@ -30,6 +35,8 @@ app.get("/", (req, res) => {
 
 // TODO rename /users to /auth
 app.use("/users", authRouter);
+
+app.use("/monthlysummary", summaryRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
