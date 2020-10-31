@@ -36,8 +36,8 @@ exports.checkAuthenticatedAsCareTaker = function (req, res, next) {
   pool.query(
     `SELECT * FROM care_takers WHERE username = $1::text`,
     [req.user["username"]],
-    (err, res) => {
-      if (res.rows.length > 0) {
+    (err, result) => {
+      if (result.rows.length > 0) {
         next();
       } else {
         res.render("error", { message: "Not authenticated as care taker" });
@@ -50,8 +50,8 @@ exports.checkNotAuthenticatedAsPetOwner = function (req, res, next) {
   pool.query(
     `SELECT * FROM pet_owners WHERE username = $1::text`,
     [req.user["username"]],
-    (err, res) => {
-      if (res.rows.length > 0) {
+    (err, result) => {
+      if (result.rows.length > 0) {
         next();
       } else {
         res.render("error", { message: "Not authenticated as pet owner" });

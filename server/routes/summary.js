@@ -4,7 +4,7 @@
 
 const router = require("express").Router();
 const {
-  checkAuthenticatedAsAdmin: checkNotAuthenticatedAsAdmin,
+  checkAuthenticatedAsAdmin,
   checkAuthenticatedAsCareTaker,
 } = require("../commons/auth");
 const { getMonthlySummary } = require("../models/summary");
@@ -19,11 +19,35 @@ async function accessMonthlySummary(req, res) {
 
 // TODO: use middleware checkAuthenticatedAsCareTaker
 // TODO: Care Taker can view their own monthly sumary
-async function accessMonthlySummaryForCurrentYearMonthAsCaretaker(req, res) {
-  return getMonthlySummary("caretaker1", 2020, 10);
+async function viewMonthlySummaryForCurrentYearMonthAsCaretaker(req, res) {
+  let d = new Date();
+
+  let result = await getMonthlySummary(
+    req.user["username"],
+    d.getFullYear(),
+    // Bug fix
+    d.getMonth() + 1
+  );
+
+  let longMonth = d.toLocaleString("en-us", { month: "long" });
+
+  console.log(result);
+
+  res.render("summary", {
+    user: result["user"],
+    year: result["year"],
+    month: longMonth,
+    days: result["pet_days"],
+    salary: result["salary"],
+  });
 }
 
-router.route("/").get(checkNotAuthenticatedAsAdmin, accessMonthlySummary);
-router.route("/mysummary").get(checkNotAuthenticatedAsAdmin, accessMonthlySummary);
+router.route("/admin").get(checkAuthenticatedAsAdmin, accessMonthlySummary);
+router
+  .route("/me")
+  .get(
+    checkAuthenticatedAsCareTaker,
+    viewMonthlySummaryForCurrentYearMonthAsCaretaker
+  );
 
 module.exports = router;
