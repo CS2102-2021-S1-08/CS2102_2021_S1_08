@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS monthly_summary (
 
 CREATE TABLE IF NOT EXISTS pet (
 	pname  varchar(200),
-	username varchar(200) REFERENCES pet_owner(username),
+	username varchar(200) REFERENCES pet_owners(username),
 	profile varchar(200),
 	category varchar(50) REFERENCES base_prices(category),
 	special varchar(200),
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS pet (
 );
 
 CREATE TABLE IF NOT EXISTS availabilities {
-	username VARCHAR(50) REFERENCES care_taker(username),
+	username VARCHAR(50) REFERENCES care_takers(username),
 	start_date DATE,
 	end_date DATE,
 	category VARCHAR(50) REFERENCES base_prices(category),
