@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS bids (
 	review varchar,
 	rating decimal(2,1),
 	successful boolean NOT NULL
-	(start_date, end_date, category) REFERENCES 
+	FOREIGN KEY (start_date, end_date, category) REFERENCES 
 		availability(start_date, end_date, category) ON DELETE CASCADE,
 	PRIMARY KEY (start_date, end_date, category, pname)
 );
