@@ -11,7 +11,6 @@ CREATE TABLE IF NOT EXISTS pet_owner (
 CREATE TABLE IF NOT EXISTS pet (
 	pname  varchar(200),
 	username varchar(200) REFERENCES pet_owner(username),
-	password varchar(200) NOT NULL,
 	profile varchar(200),
 	category varchar(50) REFERENCES pet_category(category),
 	special varchar(200),
