@@ -42,7 +42,7 @@ function createAvailability(username, start_date, end_date, category) {
 
   pool.query(`
     INSERT INTO availabilities
-    VALUES ($1::text, $2::date, $3::date, $4::text)
+    VALUES ($1::text, $2::date, $3::date, $4::text, 0)
     `,
     [username, start_date, end_date, category],
     (err, res) => {
