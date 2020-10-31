@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS bids (
 
 
 CREATE TABLE IF NOT EXISTS monthly_summary (
-	ctname varchar(50) REFERENCES care_takers (name) ON DELETE cascade,
+	ctname varchar(50) REFERENCES care_takers (username) ON DELETE cascade,
 	year INT CHECK(year >= 0),
 	month INT CHECK(
 		month >= 1

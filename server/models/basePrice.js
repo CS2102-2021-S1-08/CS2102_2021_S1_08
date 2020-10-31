@@ -7,7 +7,7 @@
 
 // GET
 function getBasePrice(category) {
-  let result = false
+  let result = []
 
   pool.query(`
     SELECT price
@@ -19,7 +19,7 @@ function getBasePrice(category) {
       if (err) {
         console.error('Error executing query', err.stack)
       }
-      result = true;
+      result = [];
     })
 
   return result
