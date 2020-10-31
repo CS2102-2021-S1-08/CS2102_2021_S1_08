@@ -48,3 +48,12 @@ CREATE TABLE IF NOT EXISTS pet (
 CREATE TABLE IF NOT EXISTS pet_category (
     category varchar(200) PRIMARY KEY NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS availabilities {
+	username VARCHAR(50) REFERENCES care_taker(username),
+	start_date DATE,
+	end_date DATE,
+	category VARCHAR(50) REFEReNCES pet_category(category),
+	price INT,
+	PRIMARY KEY(username, start_date, end_date, category)
+};
