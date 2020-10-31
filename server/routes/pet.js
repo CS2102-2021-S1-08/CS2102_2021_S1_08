@@ -19,10 +19,10 @@ const postPets = function (req, res) {
 const deletePets = function (req, res) {
 
 }
-router.route('/')
-    .get(getPets)
-    .post(postPets)
-    .delete(checkNotAuthenticatedAsPetOwner, deletePets)
+// router.route('/')
+//     .get(checkAuthenticatedAsPetOwner, getPets)
+//     .post(checkAuthenticatedAsPetOwner, postPets())
+//     .delete(checkAuthenticatedAsPetOwner, deletePets())
 
 // TODO: use middleware checkAuthenticatedAsPetOwner
 // TODO: Pet Owner can view their pets (GET)

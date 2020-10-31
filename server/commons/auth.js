@@ -18,7 +18,7 @@ exports.checkNotAuthenticated = function (req, res, next) {
   res.redirect("/users/login");
 };
 
-exports.checkNotAuthenticatedAsAdmin = function (req, res, next) {
+exports.checkAuthenticatedAsAdmin = function (req, res, next) {
   pool.query(
     "SELECT * FROM pcs_admins WHERE username=$1::text",
     [req.user["username"]],
@@ -32,7 +32,7 @@ exports.checkNotAuthenticatedAsAdmin = function (req, res, next) {
   );
 };
 
-exports.checkNotAuthenticatedAsCareTaker = function (req, res, next) {
+exports.checkAuthenticatedAsCareTaker = function (req, res, next) {
   pool.query(
     `SELECT * FROM care_takers WHERE username = $1::text`,
     [req.user["username"]],
