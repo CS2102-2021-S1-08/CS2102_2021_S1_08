@@ -13,7 +13,7 @@ const getPets = function (req, res) {
 
 const postPets = function (req, res) {
     pets.post(req.user.username, req.body.pname, req.body.profile, req.body.category, req.body.special_requirements)
-    res.status(400).end()
+    res.status(200).end()
 }
 
 const deletePets = function (req, res) {
