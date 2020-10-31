@@ -35,3 +35,24 @@ function deleteBasePrice(category) {
     [category]
   )
 }
+
+// VIEW
+function viewBasePrices() {
+  return pool.query(`
+    SELECT *
+    FROM base_prices
+    `,
+    [category]
+  )
+}
+
+// UPDATE
+function updateBasePrice(category, price) {
+  return pool.query(`
+    UPDATE base_prices
+    SET price = $1::int
+    WHERE category = $2::text
+    `,
+    [price, category]
+  )
+}
