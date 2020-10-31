@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS monthly_summary (
 	PRIMARY KEY(ctname, year, month)
 );
 
-CREATE TABLE IF OT EXISTS leaves (
+CREATE TABLE IF NOT EXISTS leaves (
 	username varchar(200) REFERENCES care_takers(username),
 	leave_date date NOT NULL
 );
