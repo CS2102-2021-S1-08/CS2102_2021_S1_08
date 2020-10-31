@@ -18,7 +18,7 @@ exports.get = function getAllPets(username) {
 }
 
 // POST
-function createPet(username, pname, profile, category, special_requirements) {
+exports.post = function createPet(username, pname, profile, category, special_requirements) {
     return pool.query(`
         INSERT INTO pets
         VALUES ($1::text, $2::text, $3::text, $4::text, $5::text)

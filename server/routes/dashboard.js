@@ -5,6 +5,7 @@ const { checkAuthenticated, checkNotAuthenticated } = require("../commons/auth")
 const { pool } = require("../dbConfig")
 
 const dashboardGet = function (req, res) {
+    console.log(req.body)
     res.render("dashboard", { user: req.user.username })
 };
 
