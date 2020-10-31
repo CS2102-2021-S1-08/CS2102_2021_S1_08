@@ -10,7 +10,7 @@
 const { pool } = require("../dbConfig");
 
 // GET
-function getPcsAdmin(username) {
+export function getPcsAdmin(username) {
   let result = []
 
   pool.query(`
@@ -29,7 +29,7 @@ function getPcsAdmin(username) {
 }
 
 // PUT
-function putPcsAdmin(username, password) {
+export function putPcsAdmin(username, password) {
   pool.query(
     `INSERT INTO users (username, password)
     VALUES ($1, $2)

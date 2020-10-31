@@ -12,7 +12,7 @@
 const { pool } = require("../dbConfig");
 
 // GET
-function getUser(username) {
+export function getUser(username) {
     let result = []
 
     pool.query(`
