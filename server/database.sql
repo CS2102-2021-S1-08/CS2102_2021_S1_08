@@ -11,13 +11,12 @@ CREATE TABLE IF NOT EXISTS bids (
 	bid_start_date date NOT NULL,
 	bid_end_date date NOT NULL,
 	review varchar,
-	rating decimal(1,1),
+	rating decimal(2,1),
 	successful boolean NOT NULL
 	PRIMARY KEY (start_date, end_date, category, pname)
-)
+);
 
 CREATE TABLE IF NOT EXISTS base_prices (
 	category varchar(200) PRIMARY KEY,
-	price decimal(3,2) NOT NULL
-)
-	
+	price decimal(5,2) NOT NULL
+);
