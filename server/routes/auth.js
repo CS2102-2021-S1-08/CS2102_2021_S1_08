@@ -6,6 +6,7 @@ const router = require("express").Router()
 const passport = require("passport")
 const { checkAuthenticated, checkNotAuthenticated } = require("../commons/auth")
 const { pool } = require("../dbConfig")
+const dashboard = require("./dashboard")
 
 const loginGet = function (req, res) {
     res.render('login')
@@ -100,7 +101,6 @@ router.route('/logout')
 router.route('/register')
     .get(checkAuthenticated, registerGet)
     .post(registerPost)
-router.route('/dashboard')
-    .get(checkNotAuthenticated, dashboardGet)
+router.use('/dashboard', checkNotAuthenticated, dashboard)
 
 module.exports = router;

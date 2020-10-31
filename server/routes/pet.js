@@ -3,6 +3,7 @@
  */ 
 
 const router = require("express").Router()
+const { checkAuthenticatedAsPetOwner } = require("../commons/auth")
 
 // TODO: use middleware checkAuthenticatedAsPetOwner
 // TODO: Pet Owner can view their pets (GET)
