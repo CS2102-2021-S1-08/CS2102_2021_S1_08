@@ -1,6 +1,7 @@
 /**
  * Model for monthly summaries
  */ 
+const { pool } = require("../dbConfig");
 
 // TODO SQL QUERIES
 // CREATE TABLE 
