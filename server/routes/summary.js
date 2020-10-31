@@ -7,14 +7,21 @@ const {
   checkAuthenticatedAsAdmin,
   checkAuthenticatedAsCareTaker,
 } = require("../commons/auth");
-const { getMonthlySummary } = require("../models/summary");
+const {
+  getMonthlySummary,
+  getAllMonthlySummary,
+} = require("../models/summary");
 
 module.exports = router;
 // TODO: use middleware checkAuthenticatedAsAdmin
 // TODO: Admin can view monthly summaries
-async function accessMonthlySummary(req, res) {
-  console.log(getMonthlySummary("caretaker1", 2020, 10));
-  return getMonthlySummary("caretaker1", 2020, 10);
+async function viewMonthlySummaryAsAdmin(req, res) {
+  let results = await getAllMonthlySummary();
+
+  res.render("adminSummary", {
+    user: req.user["username"],
+    data: results,
+  });
 }
 
 // TODO: use middleware checkAuthenticatedAsCareTaker
@@ -42,7 +49,9 @@ async function viewMonthlySummaryForCurrentYearMonthAsCaretaker(req, res) {
   });
 }
 
-router.route("/admin").get(checkAuthenticatedAsAdmin, accessMonthlySummary);
+router
+  .route("/admin")
+  .get(checkAuthenticatedAsAdmin, viewMonthlySummaryAsAdmin);
 router
   .route("/me")
   .get(
