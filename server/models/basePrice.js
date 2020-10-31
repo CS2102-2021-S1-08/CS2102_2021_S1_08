@@ -27,3 +27,11 @@ function createBasePrice(category, price) {
 }
 
 // DELETE
+function deleteBasePrice(category) {
+  return pool.query(`
+    DELETE FROM base_prices
+    WHERE category = $1::text
+    `,
+    [category]
+  )
+}

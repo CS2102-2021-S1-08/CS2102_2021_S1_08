@@ -6,8 +6,19 @@ const router = require("express").Router()
 
 // TODO: use middleware checkAuthenticatedAsPetOwner
 // TODO: Pet owner can get all bids they have made (GET)
+const getBid = function (req,res) {
+
+}
+
 // TODO: Pet owner can place a bid (POST)
+const postBid = function (req, res) {
+
+}
+
 // TODO: Pet owner can delete a bid (DELETE)
+const deleteBid = function (req, res) {
+
+}
 
 // TODO: Pet owner can add a review/rating
 // TODO: Pet owner can modify a review/rating
