@@ -1,16 +1,21 @@
+/* To ensure covering constraint on admins and users */
+CREATE TABLE IF NOT EXISTS pcs_admins (
+	username varchar(200) PRIMARY KEY,
+	password varchar(200) NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS users (
 	username varchar(200) PRIMARY KEY NOT NULL,
 	password varchar(200) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS pcs_admin (
-    username varchar(200) REFERENCES users(username)
+CREATE TABLE IF NOT EXISTS pet_owners (
+	username varchar(200) PRIMARY KEY REFERENCES users(username)
 );
 
-CREATE TABLE IF NOT EXISTS pet_owner (
-    username varchar(200) REFERENCES users(username)
+CREATE TABLE IF NOT EXISTS care_takers (
+	username varchar(200) PRIMARY KEY REFERENCES users(username)
 );
-
 
 CREATE TABLE IF NOT EXISTS bids (
 	start_date date,
