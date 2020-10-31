@@ -1,7 +1,7 @@
 const router = require("express").Router()
 const passport = require("passport")
 const pet = require('./pet.js')
-const { checkAuthenticated, checkNotAuthenticated } = require("../commons/auth")
+const { checkAuthenticated, checkAuthenticated: checkNotAuthenticated } = require("../commons/auth")
 const { pool } = require("../dbConfig")
 
 const dashboardGet = function (req, res) {
