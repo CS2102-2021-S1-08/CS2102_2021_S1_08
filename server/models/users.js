@@ -12,22 +12,36 @@
 const { pool } = require("../dbConfig");
 
 // GET
-function getUser(username) {
-    let result = []
+// function getUser(username) {
+//     let result = []
 
-    pool.query(`
-      SELECT * FROM users
-      WHERE username = $1
+//     pool.query(`
+//       SELECT * FROM users
+//       WHERE username = $1
+//       `,
+//         [username],
+//         (err, res) => {
+//             if (err) {
+//                 console.error('Error executing query', err.stack)
+//             }
+//             result = res;
+//         })
+
+//     return result
+// }
+
+function getUserType(username) {
+    return pool.query(`
+      SELECT COALESCE(
+        (SELECT 'admin' FROM pcs_admins WHERE username = $1::text),
+        (SELECT 'both' FROM (SELECT * FROM pet_owners INTERSECT SELECT * FROM care_takers) result WHERE username = $1::text),
+        (SELECT 'pet_owner' FROM pet_owners WHERE username = $1::text),
+        (SELECT 'care_taker' FROM care_takers WHERE username = $1::text)
+      );
       `,
-        [username],
-        (err, res) => {
-            if (err) {
-                console.error('Error executing query', err.stack)
-            }
-            result = res;
-        })
-
-    return result
+      [username]
+    )
 }
 
-exports.getUser = getUser;
+// exports.getUser = getUser;
+exports.getUserType = getUserType;
