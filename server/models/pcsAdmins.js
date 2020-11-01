@@ -31,7 +31,7 @@ function getPcsAdmin(username) {
 // PUT
 function putPcsAdmin(username, password) {
   pool.query(
-    `INSERT INTO users (username, password)
+    `INSERT INTO pcs_admins(username, password)
     VALUES ($1, $2)
     RETURNING username, password`, [username, password],
     (err, res) => {
