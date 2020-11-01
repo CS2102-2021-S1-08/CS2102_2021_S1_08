@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <a href="/users/dashboard">Back</a>
+    <h1>Dashboard</h1>
+    <h4>Hello <%= user %></h4>
+    <div style="width:800px;">
+        <div style="width:300px; float:left;">
+        <h4>Add an availability: </h4>
+        <form action="/availability/" method="post">
+            <label for="start_date">Enter start date: </label>
+            <input id="start_date" type="date" name="start_date" value="">
+            <label for="end_date">Enter end date: </label>
+            <input id="end_date" type="date" name="end_date" value="">
+            <label for="category">Enter pet category: </label>
+            <input id="category" type="text" name="category" value="Category">
+            <input type="submit" value="OK">
+        </form>
+        </div>
+        <div style="width:300px; float:right;">
+        <div class="form-header">
+            <h4>Delete a pet: </h4>
+        </div>
+        </div>
+    </div>
+    <div style="clear: both;"></div>
+    <h4>Your Availabilities</h4>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Start Date</th>
+            <th scope="col">End Date</th>
+            <th scope="col">Category</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for(var i=0; i<data.length; i++) { %>
+            <tr>
+                <td><%= data[i].start_date%></td>
+                <td><%= data[i].end_date%></td>
+                <td><%= data[i].category%></td>
+                <td>
+                    <form action="/availability/delete" method="post">
+                        <input id="start_date" type="hidden" name="start_date" value="<%= data[i].start_date %>">
+                        <input id="end_date" type="hidden" name="end_date" value="<%= data[i].end_date %>">
+                        <input id="category" type="hidden" name="category" value="<%= data[i].category %>">
+                        <input type="submit" value="DELETE">
+                    </form>
+                </td>
+            </tr>
+        <% } %>
+        </tbody>
+    </table>
+</body>
+
+</html>
