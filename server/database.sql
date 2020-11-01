@@ -16,7 +16,6 @@ CREATE TABLE IF NOT EXISTS pet_owners (
 -- No overlapping constraint
 CREATE TABLE IF NOT EXISTS care_takers (
 	username VARCHAR(200) PRIMARY KEY REFERENCES users(username) ON DELETE CASCADE,
-	is_full_timer BOOLEAN NOT NULL
 );
 CREATE TABLE IF NOT EXISTS base_prices (
 	category VARCHAR(200) PRIMARY KEY,
