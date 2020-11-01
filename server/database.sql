@@ -1,71 +1,80 @@
-/* To enforce covering constraint on admins and users */
 CREATE TABLE IF NOT EXISTS pcs_admins (
-	username varchar(200) PRIMARY KEY NOT NULL,
-	password varchar(200) NOT NULL
+	username VARCHAR(200) PRIMARY KEY,
+	password VARCHAR(200) NOT NULL
 );
-
 CREATE TABLE IF NOT EXISTS users (
-	username varchar(200) PRIMARY KEY NOT NULL,
-	password varchar(200) NOT NULL,
-	name varchar(200),
-	profile varchar(200)
+	username VARCHAR(200) PRIMARY KEY,
+	password VARCHAR(200) NOT NULL,
+	name VARCHAR(200),
+	profile VARCHAR(200)
 );
-
+-- Covering and overlapping constraints satisfied
 CREATE TABLE IF NOT EXISTS pet_owners (
-	username varchar(200) PRIMARY KEY NOT NULL REFERENCES users(username)
+	username VARCHAR(200) PRIMARY KEY REFERENCES users(username) ON DELETE CASCADE
 );
-
+-- Covering constraint satisfied
+-- No overlapping constraint
 CREATE TABLE IF NOT EXISTS care_takers (
-	username varchar(200) PRIMARY KEY NOT NULL REFERENCES users(username)
+	username VARCHAR(200) PRIMARY KEY REFERENCES users(username) ON DELETE CASCADE,
+	is_full_timer BOOLEAN NOT NULL
 );
-
 CREATE TABLE IF NOT EXISTS base_prices (
-	category VARCHAR(200) PRIMARY KEY NOT NULL,
+	category VARCHAR(200) PRIMARY KEY,
 	price INT NOT NULL
 );
-
 CREATE TABLE IF NOT EXISTS pets (
-	username varchar(200) REFERENCES pet_owners(username) ON DELETE CASCADE,
-	pname varchar(200) NOT NULL,
-	profile text,
-	category varchar(200) REFERENCES base_prices(category),
-	special_requirements varchar(200),
-	PRIMARY KEY (username, pname)
+	poname VARCHAR(200) REFERENCES pet_owners(username) ON DELETE CASCADE,
+	pname VARCHAR(200),
+	profile VARCHAR(200),
+	category varchar(200) REFERENCES base_prices(category) NOT NULL,
+	special_requirements VARCHAR(200),
+	PRIMARY KEY (poname, pname)
 );
-
 CREATE TABLE IF NOT EXISTS availabilities (
-	username varchar(200) NOT NULL REFERENCES care_takers(username),
-	start_date date NOT NULL,
-	end_date date NOT NULL CHECK (start_date <= end_date),
-	category varchar(200) REFERENCES base_prices(category),
-	price int,
+	username VARCHAR(200) REFERENCES care_takers(username) ON DELETE CASCADE,
+	start_date DATE,
+	end_date DATE CHECK (start_date <= end_date),
+	category VARCHAR(200) REFERENCES base_prices(category),
+	daily_price INT,
 	PRIMARY KEY(username, start_date, end_date, category)
 );
-
 CREATE TABLE IF NOT EXISTS bids (
-	start_date date,
-	end_date date,
-	category varchar(50),
-	pname varchar(50) REFERENCES pets(pname),
-	bid_start_date date NOT NULL,
-   	bid_end_date date NOT NULL,
-	review varchar,
-	rating int CHECK(
+	start_date DATE,
+	end_date DATE,
+	category VARCHAR(200) REFERENCES base_prices(category) NOT NULL,
+	poname VARCHAR(50),
+	pname VARCHAR(50),
+	ctuname VARCHAR(50),
+	bid_start_date DATE NOT NULL,
+	bid_end_date DATE NOT NULL,
+	review VARCHAR,
+	rating INT CHECK(
 		(rating IS NULL)
 		OR (
 			rating >= 0
 			AND rating <= 5
 		)
 	),
-	is_successful BOOLEAN NOT NULL,
-	FOREIGN KEY (start_date, end_date, category) REFERENCES availabilities(start_date, end_date, category),
-	CHECK ((bid_end_date <= end_date) AND (bid_start_date >= start_date) AND (bid_start_date <= bid_end_date)),
-	PRIMARY KEY (start_date, end_date, category, pname)
+	is_successful BOOLEAN DEFAULT FALSE,
+	FOREIGN KEY (poname, pname) REFERENCES pets (poname, pname),
+	FOREIGN KEY (ctuname, start_date, end_date, category) REFERENCES availabilities(username, start_date, end_date, category),
+	PRIMARY KEY (
+		poname,
+		pname,
+		ctuname,
+		start_date,
+		end_date,
+		category
+	),
+	CHECK (poname <> ctuname),
+	CHECK (
+		(bid_end_date <= end_date)
+		AND (bid_start_date >= start_date)
+		AND (bid_start_date <= bid_end_date)
+	)
 );
-
-
 CREATE TABLE IF NOT EXISTS monthly_summary (
-	ctname varchar(50) REFERENCES care_takers (username) ON DELETE cascade,
+	ctname varchar(50) REFERENCES care_takers(username) ON DELETE CASCADE,
 	year INT CHECK(year >= 0),
 	month INT CHECK(
 		month >= 1
@@ -75,8 +84,8 @@ CREATE TABLE IF NOT EXISTS monthly_summary (
 	salary INT CHECK(salary >= 0),
 	PRIMARY KEY(ctname, year, month)
 );
-
 CREATE TABLE IF NOT EXISTS leaves (
-	username varchar(200) REFERENCES care_takers(username),
-	leave_date date NOT NULL
+	username varchar(200) REFERENCES care_takers(username) ON DELETE CASCADE,
+	leave_date DATE,
+	PRIMARY KEY (username, leave_date)
 );
