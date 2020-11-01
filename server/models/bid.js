@@ -97,3 +97,4 @@ exports.updateRating = updateRating;
 exports.deleteRating = deleteRating;
 exports.updateReview = updateReview;
 exports.deleteReview = deleteReview;
+exports.markBidAsSuccessful = markBidAsSuccessful;
