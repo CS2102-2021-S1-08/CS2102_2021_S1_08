@@ -58,12 +58,12 @@ CREATE TABLE IF NOT EXISTS bids (
 	FOREIGN KEY (poname, pname) REFERENCES pets (poname, pname),
 	FOREIGN KEY (ctuname, start_date, end_date, category) REFERENCES availabilities(username, start_date, end_date, category),
 	PRIMARY KEY (
-		poname,
-		pname,
-		ctuname,
 		start_date,
 		end_date,
-		category
+		category,
+		poname,
+		pname,
+		ctuname
 	),
 	CHECK (poname <> ctuname),
 	CHECK (
