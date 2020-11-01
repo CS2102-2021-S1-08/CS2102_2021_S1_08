@@ -2,8 +2,7 @@
  * Model for bids
  */ 
 
-// TODO SQL QUERIES
-// CREATE TABLE 
+const { pool } = require("../dbConfig");
 
 // GET BID
 function getBid(start_date, end_date, category, pname) {
@@ -79,3 +78,11 @@ function deleteRating(start_date, end_date, category, pname, rating) {
     [start_date, end_date, category, pname],
   )
 }
+
+exports.getBid = getBid;
+exports.createBid = createBid;
+exports.deleteBid = deleteBid;
+exports.addRating = addRating;
+exports.deleteRating = deleteRating;
+exports.addReview = addReview;
+exports.deleteReview = deleteReview;

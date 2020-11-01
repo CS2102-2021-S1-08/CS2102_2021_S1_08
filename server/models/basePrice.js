@@ -2,8 +2,7 @@
  * Model for base prices
  */ 
 
-// TODO SQL QUERIES
-// CREATE TABLE 
+const { pool } = require("../dbConfig");
 
 // GET
 function getBasePrice(category) {
@@ -37,7 +36,7 @@ function deleteBasePrice(category) {
 }
 
 // VIEW
-function viewBasePrices() {
+function viewAllBasePrices() {
   return pool.query(`
     SELECT *
     FROM base_prices
@@ -56,3 +55,9 @@ function updateBasePrice(category, price) {
     [price, category]
   )
 }
+
+exports.getBasePrice = getBasePrice;
+exports.createBasePrice = createBasePrice;
+exports.deleteBasePrice = deleteBasePrice;
+exports.viewAllBasePrices = viewAllBasePrices;
+exports.updateBasePrice = updateBasePrice;
