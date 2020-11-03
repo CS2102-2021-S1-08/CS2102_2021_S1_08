@@ -8,15 +8,26 @@ CREATE TABLE IF NOT EXISTS users (
 	name VARCHAR(200),
 	profile VARCHAR(200)
 );
+CREATE VIEW accounts AS
+	SELECT username, password FROM pcs_admins
+	UNION
+	SELECT username, password FROM users;
 -- Covering and overlapping constraints satisfied
 CREATE TABLE IF NOT EXISTS pet_owners (
 	username VARCHAR(200) PRIMARY KEY REFERENCES users(username) ON DELETE CASCADE
 );
 -- Covering constraint satisfied
 -- No overlapping constraint
-CREATE TABLE IF NOT EXISTS care_takers (
+CREATE TABLE IF NOT EXISTS full_timers (
 	username VARCHAR(200) PRIMARY KEY REFERENCES users(username) ON DELETE CASCADE,
 );
+CREATE TABLE IF NOT EXISTS part_timers(
+	username VARCHAR(200) PRIMARY KEY REFERENCES users(username) ON DELETE CASCADE,
+);
+CREATE VIEW care_takers AS
+	SELECT username FROM full_timers
+	UNION
+	SELECT username FROM part_timers;
 CREATE TABLE IF NOT EXISTS base_prices (
 	category VARCHAR(200) PRIMARY KEY,
 	price INT NOT NULL
@@ -84,7 +95,7 @@ CREATE TABLE IF NOT EXISTS monthly_summary (
 	PRIMARY KEY(ctname, year, month)
 );
 CREATE TABLE IF NOT EXISTS leaves (
-	username varchar(200) REFERENCES care_takers(username) ON DELETE CASCADE,
+	username varchar(200) REFERENCES full_timers(username) ON DELETE CASCADE,
 	leave_date DATE,
 	PRIMARY KEY (username, leave_date)
 );

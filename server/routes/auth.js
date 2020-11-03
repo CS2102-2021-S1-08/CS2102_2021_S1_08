@@ -60,71 +60,59 @@ const registerPost = async function (req, res) {
         res.render('register', { errors })
     } else {
         //passed
-        if (type == 'admin') {
-            pool.query(
-                `SELECT * FROM pcs_admin
-                WHERE username = $1`,
-                [username],
-                (err, results) => {
-                    if (err) {
-                        console.log(err)
-                    }
-                    console.log(results.rows)
+        pool.query(
+            `SELECT * FROM accounts
+            WHERE username = $1`,
+            [username],
+            (err, results) => {
+                if (err) {
+                    console.log(err)
+                }
+                console.log(results.rows)
 
-                    if (results.rows.length > 0) {
-                        errors.push({ message: "The username is already taken" })
-                        res.render('register', { errors })
-                    } else {
-                        pcsAdmins.putPcsAdmin(username, password)
+                if (results.rows.length > 0) {
+                    errors.push({ message: "The username is already taken" })
+                    res.render('register', { errors })
+                } else {
+                    pool.query(
+                        `INSERT INTO users (username, password)
+                    VALUES ($1, $2)
+                    RETURNING username, password`, [username, password], (err, results) => {
+                        if (err) {
+                            console.log(err)
+                        }
+                        console.log(results.rows)
+                        req.flash('success_msg', "You are now registered. Please log in")
+                        res.redirect('/users/login')
+                    }
+                    )
+
+                    switch (type) {
+                        case 'petOwner':
+                            petOwners.putPetOwner(username)
+                            break;
+                        case 'fullTimer':
+                            careTakers.putFullTimer(username)
+                            break;
+                        case 'partTimer':
+                            careTakers.putPartTimer(username)
+                            break;
+                        case 'both_fullTimer':
+                            petOwners.putPetOwner(username)
+                            careTakers.putFullTimer(username)
+                            break;
+                        case 'both_partTimer':
+                            petOwners.putPetOwner(username)
+                            careTakers.putPartTimer(username)
+                            break;
+                        case 'admin':
+                            pcsAdmins.putPcsAdmin(username);
+                            break;
                     }
                 }
-            )
-        } else {
-            pool.query(
-                `SELECT * FROM users
-                WHERE username = $1`,
-                [username],
-                (err, results) => {
-                    if (err) {
-                        console.log(err)
-                    }
-                    console.log(results.rows)
 
-                    if (results.rows.length > 0) {
-                        errors.push({ message: "The username is already taken" })
-                        res.render('register', { errors })
-                    } else {
-                        pool.query(
-                            `INSERT INTO users (username, password)
-                        VALUES ($1, $2)
-                        RETURNING username, password`, [username, password], (err, results) => {
-                            if (err) {
-                                console.log(err)
-                            }
-                            console.log(results.rows)
-                            req.flash('success_msg', "You are now registered. Please log in")
-                            res.redirect('/users/login')
-                        }
-                        )
-
-                        switch (type) {
-                            case 'petOwner':
-                                petOwners.putPetOwner(username)
-                                break;
-                            case 'careTaker':
-                                careTakers.putCareTaker(username)
-                                break;
-                            case 'both':
-                                petOwners.putPetOwner(username)
-                                careTakers.putCareTaker(username)
-                                break;
-                        }
-                    }
-
-                }
-            )
-        }
-
+            }
+        )
     }
 }
 
