@@ -19,10 +19,10 @@ CREATE TABLE IF NOT EXISTS pet_owners (
 -- Covering constraint satisfied
 -- No overlapping constraint
 CREATE TABLE IF NOT EXISTS full_timers (
-	username VARCHAR(200) PRIMARY KEY REFERENCES users(username) ON DELETE CASCADE,
+	username VARCHAR(200) PRIMARY KEY REFERENCES users(username) ON DELETE CASCADE
 );
 CREATE TABLE IF NOT EXISTS part_timers(
-	username VARCHAR(200) PRIMARY KEY REFERENCES users(username) ON DELETE CASCADE,
+	username VARCHAR(200) PRIMARY KEY REFERENCES users(username) ON DELETE CASCADE
 );
 CREATE VIEW care_takers AS
 	SELECT username FROM full_timers
@@ -41,11 +41,13 @@ CREATE TABLE IF NOT EXISTS pets (
 	PRIMARY KEY (poname, pname)
 );
 CREATE TABLE IF NOT EXISTS availabilities (
-	username VARCHAR(200) REFERENCES care_takers(username) ON DELETE CASCADE,
+	username VARCHAR(200) NOT NULL,
 	start_date DATE,
 	end_date DATE CHECK (start_date <= end_date),
 	category VARCHAR(200) REFERENCES base_prices(category),
 	daily_price INT,
+	CONSTRAINT fk1 FOREIGN KEY (username) REFERENCES part_timers(username) ON DELETE CASCADE,
+	CONSTRAINT fk2 FOREIGN KEY (username) REFERENCES full_timers(username) ON DELETE CASCADE,
 	PRIMARY KEY(username, start_date, end_date, category)
 );
 CREATE TABLE IF NOT EXISTS bids (
@@ -84,7 +86,7 @@ CREATE TABLE IF NOT EXISTS bids (
 	)
 );
 CREATE TABLE IF NOT EXISTS monthly_summary (
-	ctname varchar(50) REFERENCES care_takers(username) ON DELETE CASCADE,
+	ctname varchar(200) NOT NULL,
 	year INT CHECK(year >= 0),
 	month INT CHECK(
 		month >= 1
@@ -92,6 +94,8 @@ CREATE TABLE IF NOT EXISTS monthly_summary (
 	),
 	pet_days INT CHECK(pet_days >= 0),
 	salary INT CHECK(salary >= 0),
+	CONSTRAINT fk1 FOREIGN KEY (ctname) REFERENCES part_timers(username) ON DELETE CASCADE,
+	CONSTRAINT fk2 FOREIGN KEY (ctname) REFERENCES full_timers(username) ON DELETE CASCADE,
 	PRIMARY KEY(ctname, year, month)
 );
 CREATE TABLE IF NOT EXISTS leaves (
