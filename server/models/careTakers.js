@@ -28,7 +28,7 @@ function getCareTaker(username) {
 }
 
 // PUT
-function putFullTImer(username) {
+function putFullTimer(username) {
   return pool.query(
     `INSERT INTO full_timers (username)
     VALUES ($1)
@@ -58,5 +58,5 @@ function putPartTimer(username) {
 
 // DELETE
 exports.getCareTaker = getCareTaker;
-exports.putFullTImer = putFullTImer;
+exports.putFullTimer = putFullTimer;
 exports.putPartTimer = putPartTimer;
