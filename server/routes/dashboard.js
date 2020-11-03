@@ -3,6 +3,8 @@ const passport = require("passport")
 const pet = require('./pet.js')
 const { checkAuthenticated, checkAuthenticated: checkNotAuthenticated } = require("../commons/auth")
 const { pool } = require("../dbConfig")
+const { getUserType } = require("../models/users");
+
 
 const dashboardGet = function (req, res) {
     console.log(req.body)

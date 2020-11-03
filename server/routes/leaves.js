@@ -9,7 +9,7 @@ const router = require("express").Router();
 function getController(req, res) {
   getAllLeaves(req.user.username)
     .then(data => {
-      res.render('leaves', { user: req.user.username, data: data.rows })
+      res.render('leave', { user: req.user.username, data: data.rows })
     })
     .catch(err => {
       res.render('error', { error: err })
@@ -19,9 +19,9 @@ function getController(req, res) {
 function postController(req, res) {
   createLeave(req.user.username, new Date(req.body.leave_date))
     .then(data => {
-      getAllAvailabilities(req.user.username)
+      getAllLeaves(req.user.username)
         .then(data => {
-          res.render('leaves', { user: req.user.username, data: data.rows })
+          res.render('leave', { user: req.user.username, data: data.rows })
         })
         .catch(err => {
           res.render('error', { message: "Error", error: err })
@@ -35,9 +35,9 @@ function postController(req, res) {
 function deleteController(req, res) {
   deleteLeave(req.user.username, new Date(req.body.leave_date))
     .then(data => {
-      getAllAvailabilities(req.user.username)
+      getAllLeaves(req.user.username)
         .then(data => {
-          res.render('leaves', { user: req.user.username, data: data.rows })
+          res.render('leave', { user: req.user.username, data: data.rows })
         })
         .catch(err => {
           res.render('error', { message: "Error", error: err })
