@@ -5,6 +5,7 @@ var bodyParser = require("body-parser");
 const flash = require("express-flash");
 const passport = require("passport");
 const initializePassport = require("./passportConfig");
+const availabilityRouter = require("./routes/availability");
 const authRouter = require("./routes/auth");
 const summaryRouter = require("./routes/summary");
 
@@ -35,6 +36,7 @@ app.get("/", (req, res) => {
 
 // TODO rename /users to /auth
 app.use("/users", authRouter);
+app.use("/availability", availabilityRouter)
 
 app.use("/monthlysummary", summaryRouter);
 
