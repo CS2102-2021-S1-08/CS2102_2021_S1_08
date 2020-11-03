@@ -58,4 +58,5 @@ function putPartTimer(username) {
 
 // DELETE
 exports.getCareTaker = getCareTaker;
-exports.putCareTaker = putCareTaker;
+exports.putFullTImer = putFullTImer;
+exports.putPartTimer = putPartTimer;
