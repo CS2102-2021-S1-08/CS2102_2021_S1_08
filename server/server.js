@@ -7,6 +7,7 @@ const passport = require("passport");
 const initializePassport = require("./passportConfig");
 const availabilityRouter = require("./routes/availability");
 const authRouter = require("./routes/auth");
+const careTakerRouter = require("./routes/careTakers");
 const summaryRouter = require("./routes/summary");
 
 initializePassport(passport);
@@ -36,7 +37,8 @@ app.get("/", (req, res) => {
 
 // TODO rename /users to /auth
 app.use("/users", authRouter);
-app.use("/availability", availabilityRouter)
+app.use("/availability", availabilityRouter);
+app.use("/caretaker", careTakerRouter);
 
 app.use("/monthlysummary", summaryRouter);
 
