@@ -11,7 +11,7 @@ exports.get = function getAllPets(username) {
     return pool.query(`
         SELECT pname, profile, category, special_requirements
         FROM pets
-        WHERE username = $1::text
+        WHERE pname = $1::text
         `,
         [username]
     )
