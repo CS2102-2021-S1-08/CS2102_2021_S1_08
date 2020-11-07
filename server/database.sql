@@ -155,14 +155,14 @@ FROM bids B
 WHERE NEW.ctuname = B.ctuname
 	AND NEW.bid_date = B.bid_date
 	AND B.is_successful = TRUE;
-IF ctx = 5 THEN RETURN NULL;
+IF ctx = 5 THEN RAISE EXCEPTION 'caretaker can only take care of up to 5 pets in a day';
 ELSE RETURN NEW;
 END IF;
 END;
 $$;
 CREATE TRIGGER check_bid BEFORE
 INSERT
-	OR
+OR
 UPDATE ON bids FOR EACH ROW EXECUTE PROCEDURE check_caretaker_pet_limit();
 SELECT *
 FROM bids B
