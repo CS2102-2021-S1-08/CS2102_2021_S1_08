@@ -15,7 +15,7 @@ BEGIN
 SELECT COUNT(*) INTO ctx
 FROM users U
 WHERE NEW.username = U.username;
-IF ctx > 0 THEN RETURN NULL;
+IF ctx > 0 THEN RAISE EXCEPTION 'pcs_admin is also a user';
 ELSE RETURN NEW;
 END IF;
 END;
@@ -26,7 +26,7 @@ BEGIN
 SELECT COUNT(*) INTO ctx
 FROM pcs_admins P
 WHERE NEW.username = P.username;
-IF ctx > 0 THEN RETURN NULL;
+IF ctx > 0 THEN RAISE EXCEPTION 'user is also a pcs_admin';
 ELSE RETURN NEW;
 END IF;
 END;
@@ -66,7 +66,18 @@ BEGIN
 SELECT COUNT(*) INTO ctx
 FROM full_timers F
 WHERE NEW.username = F.username;
-IF ctx > 0 THEN RETURN NULL;
+IF ctx > 0 THEN RAISE EXCEPTION 'part timer is also a full timer';
+ELSE RETURN NEW;
+END IF;
+END;
+$$;
+CREATE FUNCTION check_not_part_timer() RETURNS TRIGGER LANGUAGE PLPGSQL AS $$
+DECLARE ctx NUMERIC;
+BEGIN
+SELECT COUNT(*) INTO ctx
+FROM part_timers P
+WHERE NEW.username = P.username;
+IF ctx > 0 THEN RAISE EXCEPTION 'full timer is also a part timer';
 ELSE RETURN NEW;
 END IF;
 END;
@@ -75,17 +86,6 @@ CREATE TRIGGER check_part_timer BEFORE
 INSERT
 	OR
 UPDATE ON part_timers FOR EACH ROW EXECUTE PROCEDURE check_not_full_timer();
-CREATE FUNCTION check_not_part_timer() RETURNS TRIGGER LANGUAGE PLPGSQL AS $$
-DECLARE ctx NUMERIC;
-BEGIN
-SELECT COUNT(*) INTO ctx
-FROM part_timers P
-WHERE NEW.username = P.username;
-IF ctx > 0 THEN RETURN NULL;
-ELSE RETURN NEW;
-END IF;
-END;
-$$;
 CREATE TRIGGER check_full_timer BEFORE
 INSERT
 	OR
