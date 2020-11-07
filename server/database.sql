@@ -139,9 +139,9 @@ CREATE TABLE IF NOT EXISTS bids (
 	start_date DATE,
 	end_date DATE,
 	category VARCHAR(200) REFERENCES base_prices(category),
-	poname VARCHAR(50),
-	pname VARCHAR(50),
-	ctuname VARCHAR(50),
+	poname VARCHAR(200),
+	pname VARCHAR(200),
+	ctuname VARCHAR(200),
 	bid_date DATE NOT NULL,
 	review VARCHAR,
 	rating INT CHECK(
