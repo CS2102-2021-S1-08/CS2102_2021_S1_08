@@ -40,11 +40,6 @@ Note: png and pdf of ER diagram is in the same folder
 3. A Bid is only valid if the category of the Pet matches the category of the Availability
     - Cannot be reflected on ER diagram
 4. A Care Taker can choose to accept or reject a Bid. The Bid accepted by the Care Taker will be known as a successful Bid
-5. A Successful Bid is marked as successful
-6. An Unsuccessful Bid is marked as unsuccessful
-7. A bid cannot be both successful and unsuccessful
-    - Cannot be reflected on ER diagram
-    - Column constraint
 
 ## Review and Rating
 
