@@ -22,14 +22,14 @@ CREATE TABLE IF NOT EXISTS pet_owners (
 );
 -- Covering constraint satisfied
 -- No overlapping constraint
+CREATE TABLE IF NOT EXISTS care_takers(
+	username VARCHAR(200) PRIMARY KEY REFERENCES users(username) ON DELETE CASCADE
+);
 CREATE TABLE IF NOT EXISTS full_timers (
 	username VARCHAR(200) PRIMARY KEY REFERENCES care_takers(username) ON DELETE CASCADE
 );
 CREATE TABLE IF NOT EXISTS part_timers(
 	username VARCHAR(200) PRIMARY KEY REFERENCES care_takers(username) ON DELETE CASCADE
-);
-CREATE TABLE IF NOT EXISTS care_takers(
-	username VARCHAR(200) PRIMARY KEY REFERENCES users(username) ON DELETE CASCADE
 );
 CREATE TABLE IF NOT EXISTS base_prices ( 
 	category VARCHAR(200) PRIMARY KEY,
