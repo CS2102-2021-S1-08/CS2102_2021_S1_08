@@ -17,6 +17,7 @@ const PORT = process.env.PORT || 8080;
 
 app.set("views", "./views");
 app.set("view engine", "ejs");
+app.use(express.static('public'));
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json

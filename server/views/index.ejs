@@ -4,13 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" integrity="sha384-4ZPLezkTZTsojWFhpdFembdzFudphhoOzIunR1wH6g1WQDzCAiPvDyitaK67mp0+" crossorigin="anonymous">
+    <title>PetCareService</title>
 </head>
 
 <body>
-    <h1>Home</h1>
-    <a href="/users/login">Login</a>
+    <div>
+        <ul class="horizontal">
+            <li style="float:right"><a href="/users/login">Login/Register</a></li>
+        </ul>
+    </div>
+    <div class="hero-image">
+        <div class="hero-text">
+            <h1>Welcome to PetCareService</h1>
+            <p>Looking for a Care Taker to take care of your pets? Or looking to make some extra cash while caring for pets?</p>
+            <button onclick="window.location.href='/users/register'">Register now!</button>
+        </div>
+    </div>
 </body>
 
 </html>
