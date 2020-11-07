@@ -183,6 +183,31 @@ CREATE TABLE IF NOT EXISTS monthly_summary (
 	PRIMARY KEY(ctname, year, month)
 );
 
+CREATE FUNCTION add_successful_bid_to_monthly_summary()
+RETURNS TRIGGER LANGUAGE PLPGSQL AS $$
+	DECLARE salaryToAdd INT;
+	BEGIN
+		SELECT price INTO salaryToAdd FROM base_prices WHERE category = NEW.category;
+		IF EXISTS (SELECT * from monthly_summary 
+								WHERE ctname = NEW.ctuname 
+								AND year = EXTRACT(YEAR FROM NEW.bid_date)
+								AND month = EXTRACT(MONTH FROM NEW.bid_date) + 1
+							)
+		THEN UPDATE monthly_summary
+			SET pet_days = pet_days + 1, salary = salary + salaryToAdd
+			WHERE ctname = NEW.ctuname AND year = EXTRACT(YEAR FROM NEW.bid_date) AND month = EXTRACT(MONTH FROM NEW.bid_date) + 1;
+		ELSE INSERT INTO monthly_summary
+			VALUES (NEW.ctuname, EXTRACT(YEAR FROM NEW.bid_date), EXTRACT(MONTH FROM NEW.bid_date) + 1, 1, salaryToAdd);
+		END IF;
+	END;
+$$;
+
+CREATE TRIGGER add_successful_bid_to_monthly_summary
+AFTER INSERT ON bids
+FOR EACH ROW
+WHEN (NEW.is_successful = TRUE)
+EXECUTE PROCEDURE add_successful_bid_to_monthly_summary();
+
 --- Leaves
 
 CREATE TABLE IF NOT EXISTS leaves (
