@@ -16,12 +16,12 @@ function getBidAsPetOwner(poname) {
 }
 
 // POST BID
-function createBid(start_date, end_date, category, poname, pname, ctuname, bid_start_date, bid_end_date) {
+function createBid(start_date, end_date, category, poname, pname, ctuname, bid_date) {
   return pool.query(`
     INSERT INTO bids
-    VALUES ($1::date, $2::date, $3::text, $4::text, $5::text, $6::text, $7::date, $8::date, null, null, false)
+    VALUES ($1::date, $2::date, $3::text, $4::text, $5::text, $6::text, $7::date, null, null, false)
     `,
-    [start_date, end_date, category, poname, pname, ctuname, bid_start_date, bid_end_date]
+    [start_date, end_date, category, poname, pname, ctuname, bid_date]
   )
 }
 

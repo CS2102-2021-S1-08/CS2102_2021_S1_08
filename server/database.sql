@@ -58,8 +58,7 @@ CREATE TABLE IF NOT EXISTS bids (
 	poname VARCHAR(50),
 	pname VARCHAR(50),
 	ctuname VARCHAR(50),
-	bid_start_date DATE NOT NULL,
-	bid_end_date DATE NOT NULL,
+	bid_date DATE NOT NULL,
 	review VARCHAR,
 	rating INT CHECK(
 		(rating IS NULL)
@@ -81,9 +80,8 @@ CREATE TABLE IF NOT EXISTS bids (
 	),
 	CHECK (poname <> ctuname),
 	CHECK (
-		(bid_end_date <= end_date)
-		AND (bid_start_date >= start_date)
-		AND (bid_start_date <= bid_end_date)
+		(start_date <= bid_date)
+		AND (bid_date <= end_date)
 	)
 );
 CREATE TABLE IF NOT EXISTS monthly_summary (
