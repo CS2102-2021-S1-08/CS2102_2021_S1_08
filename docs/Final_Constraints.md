@@ -58,29 +58,21 @@ Note: png and pdf of ER diagram is in the same folder
 ## Care Taker Pet Limit
 
 1. A Care Taker cannot take care of more than 5 Pets on any single day
-    - For each day specified on a bid, the database can check if there are 5 or more successful Bids active on that day
-    - If there are 5 or more successful Bids, the Care Taker cannot accept the bid. Else, the Care Taker can accept the bid
+    - For any bid, the database can check if there are 5 or more successful Bids active on that day
+        - If there are 5 or more successful Bids, the Care Taker will not be able to accept the bid. Else, the Care Taker can accept the bid
     - Cannot be reflected on ER diagram
 
 ## Care Taker Monthly Summary
 
 1. A Monthly Summary consists of year, month, pet-days and salary
-2. At the start of each Month, a Monthly Summary of the previous Month is created
-    - Cannot be reflected on ER diagram
-3. Every Care Taker has a Monthly Summary for each Month they have worked
+2. Every Care Taker has a Monthly Summary for each Month they have worked
     - Identity dependency
     - Year and Month as partial key
-4. Pet-days are calculated by checking each successful Bid that lies in that month, and then adding the pet-days in that month
-5. Salary is calculated by checking each successful Bid that has a start or end date belonging to that month, and then adding the daily price multiplied by the pet-days in that month. The salary is also affected by whether the Care Taker is a Full Timer of Part Timer
-    - Case Full Timer: Care Taker takes 85% of price
-      - It does not make sense that a Full Timer takes a fixed rate for the first 60 pet-days. An alternative is to provide a better incentive than Part Timers
-    - Case Part Timer: Care Taker takes 75% of price
-    - Example, a successful Bid from 30th of October to 2nd of November at a daily price of $50 will contribute $50 * 2 * 0.85 = $85 to the salary of a Full Timer for October 
+3. Each successful bid adds one pet day to the monthly summary on the month that the bid takes place in
+4. Each successful bid adds the price of the category of the pet to the monthly summary on the month that the bid takes place in
 
 ## Base Price
 
 1. The Base Price of different categories of Pets should be recorded in a list, and can be modified by PCS Admin at any time
     - No way to show only PCS Admin can modify the table
-2. The daily price of an Availability is determined by a variety of factors, such as the Base Price of the category and the average rating of the Care Taker
-    - E.g. (Base Price of Category) + (Rating * 4)
-    - Base Price to be obtained from the base price list
+
