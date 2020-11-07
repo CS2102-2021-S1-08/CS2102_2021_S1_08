@@ -203,7 +203,7 @@ RETURNS TRIGGER LANGUAGE PLPGSQL AS $$
 $$;
 
 CREATE TRIGGER add_successful_bid_to_monthly_summary
-AFTER INSERT ON bids
+AFTER UPDATE ON bids
 FOR EACH ROW
 WHEN (NEW.is_successful = TRUE)
 EXECUTE PROCEDURE add_successful_bid_to_monthly_summary();
