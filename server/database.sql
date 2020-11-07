@@ -23,18 +23,15 @@ CREATE TABLE IF NOT EXISTS pet_owners (
 -- Covering constraint satisfied
 -- No overlapping constraint
 CREATE TABLE IF NOT EXISTS full_timers (
-	username VARCHAR(200) PRIMARY KEY REFERENCES users(username) ON DELETE CASCADE
+	username VARCHAR(200) PRIMARY KEY REFERENCES care_takers(username) ON DELETE CASCADE
 );
 CREATE TABLE IF NOT EXISTS part_timers(
+	username VARCHAR(200) PRIMARY KEY REFERENCES care_takers(username) ON DELETE CASCADE
+);
+CREATE TABLE IF NOT EXISTS care_takers(
 	username VARCHAR(200) PRIMARY KEY REFERENCES users(username) ON DELETE CASCADE
 );
-CREATE VIEW care_takers AS
-SELECT username
-FROM full_timers
-UNION
-SELECT username
-FROM part_timers;
-CREATE TABLE IF NOT EXISTS base_prices (
+CREATE TABLE IF NOT EXISTS base_prices ( 
 	category VARCHAR(200) PRIMARY KEY,
 	price INT NOT NULL
 );
@@ -47,7 +44,7 @@ CREATE TABLE IF NOT EXISTS pets (
 	PRIMARY KEY (poname, pname)
 );
 CREATE TABLE IF NOT EXISTS availabilities (
-	username VARCHAR(200) REFERENCES users(username) ON DELETE CASCADE,
+	username VARCHAR(200) REFERENCES care_takers(username) ON DELETE CASCADE,
 	start_date DATE,
 	end_date DATE CHECK (start_date <= end_date),
 	category VARCHAR(200) REFERENCES base_prices(category),
