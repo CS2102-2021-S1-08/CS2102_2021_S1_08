@@ -130,7 +130,6 @@ CREATE TABLE IF NOT EXISTS availabilities (
 	start_date DATE,
 	end_date DATE CHECK (start_date <= end_date),
 	category VARCHAR(200) REFERENCES base_prices(category),
-	daily_price INT,
 	PRIMARY KEY(username, start_date, end_date, category)
 );
 
