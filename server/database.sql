@@ -22,18 +22,15 @@ CREATE TABLE IF NOT EXISTS pet_owners (
 );
 -- Covering constraint satisfied
 -- No overlapping constraint
-CREATE TABLE IF NOT EXISTS full_timers (
+CREATE TABLE IF NOT EXISTS care_takers (
 	username VARCHAR(200) PRIMARY KEY REFERENCES users(username) ON DELETE CASCADE
+);
+CREATE TABLE IF NOT EXISTS full_timers (
+	username VARCHAR(200) PRIMARY KEY REFERENCES care_takers(username) ON DELETE CASCADE
 );
 CREATE TABLE IF NOT EXISTS part_timers(
-	username VARCHAR(200) PRIMARY KEY REFERENCES users(username) ON DELETE CASCADE
+	username VARCHAR(200) PRIMARY KEY REFERENCES care_takers(username) ON DELETE CASCADE
 );
-CREATE VIEW care_takers AS
-SELECT username
-FROM full_timers
-UNION
-SELECT username
-FROM part_timers;
 CREATE TABLE IF NOT EXISTS base_prices (
 	category VARCHAR(200) PRIMARY KEY,
 	price INT NOT NULL
@@ -47,7 +44,7 @@ CREATE TABLE IF NOT EXISTS pets (
 	PRIMARY KEY (poname, pname)
 );
 CREATE TABLE IF NOT EXISTS availabilities (
-	username VARCHAR(200) REFERENCES users(username) ON DELETE CASCADE,
+	username VARCHAR(200) REFERENCES care_takers(username) ON DELETE CASCADE,
 	start_date DATE,
 	end_date DATE CHECK (start_date <= end_date),
 	category VARCHAR(200) REFERENCES base_prices(category),
@@ -90,7 +87,7 @@ CREATE TABLE IF NOT EXISTS bids (
 	)
 );
 CREATE TABLE IF NOT EXISTS monthly_summary (
-	ctname varchar(200) REFERENCES users(username) ON DELETE CASCADE,
+	ctname varchar(200) REFERENCES care_takers(username) ON DELETE CASCADE,
 	year INT CHECK(year >= 0),
 	month INT CHECK(
 		month >= 1
@@ -105,7 +102,6 @@ CREATE TABLE IF NOT EXISTS leaves (
 	leave_date DATE,
 	PRIMARY KEY (username, leave_date)
 );
-
 CREATE FUNCTION check_not_full_timer() RETURNS TRIGGER LANGUAGE PLPGSQL AS $$
 DECLARE ctx NUMERIC;
 BEGIN
@@ -117,14 +113,10 @@ ELSE RETURN NEW;
 END IF;
 END;
 $$;
-
 CREATE TRIGGER check_part_timer BEFORE
-INSERT OR UPDATE
-ON part_timers
-FOR EACH ROW
-EXECUTE PROCEDURE check_not_full_timer();
-
-
+INSERT
+	OR
+UPDATE ON part_timers FOR EACH ROW EXECUTE PROCEDURE check_not_full_timer();
 CREATE FUNCTION check_not_part_timer() RETURNS TRIGGER LANGUAGE PLPGSQL AS $$
 DECLARE ctx NUMERIC;
 BEGIN
@@ -136,14 +128,10 @@ ELSE RETURN NEW;
 END IF;
 END;
 $$;
-
-
 CREATE TRIGGER check_full_timer BEFORE
-INSERT OR UPDATE
-ON full_timers
-FOR EACH ROW
-EXECUTE PROCEDURE check_not_part_timer();
-
+INSERT
+	OR
+UPDATE ON full_timers FOR EACH ROW EXECUTE PROCEDURE check_not_part_timer();
 CREATE FUNCTION check_not_user() RETURNS TRIGGER LANGUAGE PLPGSQL AS $$
 DECLARE ctx NUMERIC;
 BEGIN
@@ -155,14 +143,10 @@ ELSE RETURN NEW;
 END IF;
 END;
 $$;
-
 CREATE TRIGGER check_pcs_admin BEFORE
-INSERT OR UPDATE
-ON pcs_admins
-FOR EACH ROW
-EXECUTE PROCEDURE check_not_user();
-
-
+INSERT
+	OR
+UPDATE ON pcs_admins FOR EACH ROW EXECUTE PROCEDURE check_not_user();
 CREATE FUNCTION check_not_pcs_admin() RETURNS TRIGGER LANGUAGE PLPGSQL AS $$
 DECLARE ctx NUMERIC;
 BEGIN
@@ -174,10 +158,7 @@ ELSE RETURN NEW;
 END IF;
 END;
 $$;
-
-
 CREATE TRIGGER check_user BEFORE
-INSERT OR UPDATE
-ON users
-FOR EACH ROW
-EXECUTE PROCEDURE check_not_pcs_admin();
+INSERT
+	OR
+UPDATE ON users FOR EACH ROW EXECUTE PROCEDURE check_not_pcs_admin();
