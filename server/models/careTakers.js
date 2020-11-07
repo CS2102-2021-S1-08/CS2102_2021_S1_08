@@ -143,6 +143,23 @@ function putPartTimer(username) {
   );
 }
 
+exports.getAllBids = async function (username) {
+    const query = `
+      SELECT *
+      FROM bids
+      WHERE ctuname = $1
+      AND start_date >= CURRENT_DATE
+      ORDER BY
+      start_date ASC
+      `;
+    const values = [username];
+    try {
+        const res = await pool.query(query, values);
+        return res.rows[0];
+    } catch (err) {
+        console.log(err.stack);
+    }
+}
 // DELETE
 exports.getCareTaker = getCareTaker;
 exports.putFullTimer = putFullTimer;
