@@ -35,7 +35,7 @@ Note: png and pdf of ER diagram is in the same folder
 ## Bid
 
 1. A Pet Owner can bid for a Care Taker's Availability for their Pet
-2. A Bid consists of a start date and end date that falls within that of the Care Taker's Availability
+2. A Bid consists of a date that falls within that of the Care Taker's Availability
     - i.e. Pet owner cannot choose a date the Care Taker is unavailable for
 3. A Bid is only valid if the category of the Pet matches the category of the Availability
     - Cannot be reflected on ER diagram
@@ -48,7 +48,7 @@ Note: png and pdf of ER diagram is in the same folder
 ## Order
 
 1. An Order takes place between a Pet Owner and a Care Taker for a Pet after a successful Bid 
-2. An Order consists of the start date and end date as specified by the successful Bid, as well as the daily price as stated in the Care Taker's Availability
+2. An Order consists of the date as specified by the successful Bid, as well as the daily price as stated in the Care Taker's Availability
 
 ## Review
 
@@ -79,14 +79,8 @@ Note: png and pdf of ER diagram is in the same folder
 3. Every Care Taker has a Monthly Summary for each Month they have worked
     - Identity dependency
     - Year and Month as partial key
-4. Pet-days are calculated by checking each Order that has a start or end date belonging to that month, and then adding the pet-days in that month
-    - Case 1: start date and end date within month
-      - Add number of days from start to end
-    - Case 2: start date within month, end date not within month
-      - Add number of days from start date of Order to last date of month
-    - Case 3: start date not within month, end date within month
-      - Add number of days from start date of month to end date of Order
-5. Salary is calculated by checking each Order that has a start or end date belonging to that month, and then adding the daily price multiplied by the pet-days in that month. The salary is also affected by whether the Care Taker is a Full Timer of Part Timer
+4. Pet-days are calculated by checking each Order that has a date belonging to that month, and then adding the pet-days in that month
+5. Salary is calculated by checking each Order that has a date belonging to that month, and then adding the daily price multiplied by the pet-days in that month. The salary is also affected by whether the Care Taker is a Full Timer of Part Timer
     - Case Full Timer: Care Taker takes 85% of price
       - It does not make sense that a Full Timer takes a fixed rate for the first 60 pet-days. An alternative is to provide a better incentive than Part Timers
     - Case Part Timer: Care Taker takes 75% of price
