@@ -113,8 +113,24 @@ exports.getCareTakerTotalSalary = async function (username) {
 };
 
 // PUT
+function putCareTaker(username){
+    pool.query(
+        `INSERT INTO care_takers (username)
+    VALUES ($1)
+    RETURNING username`,
+        [username],
+        (err, res) => {
+            if (err) {
+                console.error("Error executing query", err.stack);
+            }
+            console.log(res.rows);
+            console.log("added to caretaker");
+        }
+    );
+}
 function putFullTimer(username) {
-  return pool.query(
+    putCareTaker(username);
+    pool.query(
     `INSERT INTO full_timers (username)
     VALUES ($1)
     RETURNING username`,
@@ -129,7 +145,8 @@ function putFullTimer(username) {
 }
 
 function putPartTimer(username) {
-  return pool.query(
+    putCareTaker(username);
+    pool.query(
     `INSERT INTO part_timers (username)
     VALUES ($1)
     RETURNING username`,
@@ -162,5 +179,6 @@ exports.getAllBids = async function (username) {
 }
 // DELETE
 exports.getCareTaker = getCareTaker;
+exports.putCareTaker = putCareTaker;
 exports.putFullTimer = putFullTimer;
 exports.putPartTimer = putPartTimer;
