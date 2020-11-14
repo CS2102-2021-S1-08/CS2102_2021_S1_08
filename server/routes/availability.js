@@ -18,7 +18,7 @@ function getController(req, res) {
 function postController(req, res) {
   createAvailability(req.user.username, new Date(req.body.start_date), new Date(req.body.end_date)  , req.body.category)
     .then(data => {
-      getAllAvailabilities(req.user.username)
+      getAllAvailabilitiesForCareTaker(req.user.username)
         .then(data => {
           res.render('availability', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
         })
@@ -34,7 +34,7 @@ function postController(req, res) {
 function deleteController(req, res) {
   deleteAvailabilty(req.user.username, new Date(req.body.start_date), new Date(req.body.end_date), req.body.category)
     .then(data => {
-      getAllAvailabilities(req.user.username)
+      getAllAvailabilitiesForCareTaker(req.user.username)
         .then(data => {
           res.render('availability', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
         })
