@@ -23,7 +23,7 @@ insert into availabilities (username, start_date, end_date, category) values ('h
 insert into availabilities (username, start_date, end_date, category) values ('dlongcaked', '2020-10-01', '2020-10-15', 'husky');
 insert into availabilities (username, start_date, end_date, category) values ('atripney2n', '2020-10-10', '2020-10-15', 'turtle');
 insert into availabilities (username, start_date, end_date, category) values ('dbodemeaid2s', '2020-11-01', '2020-11-15', 'husky');
-insert into availabilities (username, start_date, end_date, category) values ('amclucas2o', '2020-06-10', '2020-06-29', 'chinchilla');
+insert into availabilities (username, start_date, end_date, category) values ('amclucas2o', '2020-06-10', '2020-06-29', 'horse');
 insert into availabilities (username, start_date, end_date, category) values ('nsparks2w', '2020-12-01', '2020-12-15', 'husky');
 insert into availabilities (username, start_date, end_date, category) values ('lsteggals2u', '2020-08-29', '2020-09-18', 'cat');
 insert into availabilities (username, start_date, end_date, category) values ('atrickey2h', '2020-12-01', '2020-12-15', 'chinchilla');
