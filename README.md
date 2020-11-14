@@ -6,6 +6,8 @@ This is a project for the module CS2102 conducted at NUS for Semester 1 of AY202
 
 The project consists of developing a pet caring service application that allows pet owner to search for care takers for their pets for certain periods of time.
 
+Deployed website: https://cs2102-petcare-g08.herokuapp.com/
+
 Final project report and constraints are [in the docs/ folder.](./docs)
 
 ## Prerequisites
