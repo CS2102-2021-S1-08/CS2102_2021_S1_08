@@ -137,6 +137,28 @@ CREATE TABLE IF NOT EXISTS availabilities (
 	PRIMARY KEY(username, start_date, end_date, category)
 );
 
+CREATE FUNCTION check_no_overlap_on_availabilities() 
+RETURNS TRIGGER LANGUAGE PLPGSQL AS $$
+	DECLARE ctx NUMERIC;
+	BEGIN
+		IF EXISTS (
+			SELECT * FROM availabilities
+			  WHERE NEW.start_date <= end_date
+				AND NEW.end_date >= start_date
+				AND category = NEW.category
+		)
+		THEN RAISE EXCEPTION 'cannot have availability due to overlap';
+		ELSE RETURN NEW;
+		END IF;
+	END;
+$$;
+
+CREATE TRIGGER check_no_overlap_on_availabilities
+BEFORE INSERT ON availabilities 
+FOR EACH ROW
+EXECUTE PROCEDURE check_no_overlap_on_availabilities();
+
+
 --- Bids
 
 CREATE TABLE IF NOT EXISTS bids (
@@ -238,3 +260,22 @@ CREATE TABLE IF NOT EXISTS leaves (
 	leave_date DATE,
 	PRIMARY KEY (username, leave_date)
 );
+
+CREATE FUNCTION check_not_on_leave() 
+RETURNS TRIGGER LANGUAGE PLPGSQL AS $$
+	DECLARE ctx NUMERIC;
+	BEGIN
+		IF EXISTS (SELECT * from leaves 
+								WHERE NEW.start_date < leave_date
+								AND leave_date < NEW.end_date
+							)
+		THEN RAISE EXCEPTION 'cannot have availability due to leave';
+		ELSE RETURN NEW;
+		END IF;
+	END;
+$$;
+
+CREATE TRIGGER check_not_on_leave
+BEFORE INSERT ON availabilities 
+FOR EACH ROW
+EXECUTE PROCEDURE check_not_on_leave();
