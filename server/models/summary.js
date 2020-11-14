@@ -28,3 +28,10 @@ exports.getAllMonthlySummary = async function () {
     console.log(err.stack);
   }
 };
+
+exports.getMonthlySummariesForCareTaker = function(username) {
+  return pool.query(`
+    SELECT * FROM monthly_summary
+    WHERE ctname = $1::text`,
+    [username]);
+}
