@@ -4,46 +4,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <title>PetCareService</title>
 </head>
 
 <body>
-    <a href="/users/dashboard">Back</a>
-    <h1>Dashboard</h1>
-    <h4>Hello <%= user %></h4>
-    <div style="width:800px;">
-        <div style="width:300px; float:left;">
-        <h4>Add a leave: </h4>
-        <form action="/leave/" method="post">
-            <label for="leave_date">Enter leave date: </label>
-            <input id="leave_date" type="date" name="leave_date" value="">
-            <input type="submit" value="OK">
-        </form>
-        </div>
+    <div>
+        <ul class="horizontal">
+            <li><a href="/users/dashboard">Home</a></li>
+            <li style="float:right"><a href="/users/logout">Logout</a></li>
+            <li style="float:right"><div>Logged in as <%= user %></div></li>
+
+        </ul>
     </div>
-    <div style="clear: both;"></div>
-    <h4>Your Leaves</h4>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Leave Date</th>
-        </tr>
-        </thead>
-        <tbody>
-        <% for(var i=0; i<data.length; i++) { %>
+        
+    <div class="content">
+        <div>
+            <form class="pure-form-stacked" action="/leave/" method="post">
+                <label for="leave_date">Enter leave date: </label>
+                <input id="leave_date" type="date" name="leave_date" value="">
+                <input type="submit" value="OK">
+            </form>
+        </div>
+
+        <div style="clear: both;"></div>
+        <h4>Your Leaves</h4>
+        <table class="pure-table pure-table-bordered">
+            <thead>
             <tr>
-                <td><%= data[i].leave_date%></td>
-                <td>
-                    <form action="/leave/delete" method="post">
-                        <input id="leave_date" type="hidden" name="leave_date" value="<%= data[i].leave_date %>">
-                        <input type="submit" value="DELETE">
-                    </form>
-                </td>
+                <th scope="col">Leave Date</th>
             </tr>
-        <% } %>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            <% for(var i=0; i<data.length; i++) { %>
+                <tr>
+                    <td><%= data[i].leave_date%></td>
+                    <td>
+                        <form action="/leave/delete" method="post">
+                            <input id="leave_date" type="hidden" name="leave_date" value="<%= data[i].leave_date %>">
+                            <input type="submit" value="DELETE">
+                        </form>
+                    </td>
+                </tr>
+            <% } %>
+            </tbody>
+        </table>
+    </div>
 </body>
 
 </html>
