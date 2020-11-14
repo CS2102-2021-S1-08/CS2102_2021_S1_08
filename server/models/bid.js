@@ -70,7 +70,7 @@ function updateBidForPetOwner(start_date, end_date, category, poname, pname, ctu
   )
 }
 
-function updateBidForCareTaker(start_date, end_date, category, poname, pname, ctuname, is_successful) {
+function updateBidForCareTaker(start_date, end_date, category, poname, pname, ctuname, bid_date, is_successful) {
   return pool.query(`
     UPDATE bids
     SET is_successful = $8::boolean

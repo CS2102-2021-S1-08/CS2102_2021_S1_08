@@ -114,7 +114,7 @@ const {
   }
   
   function updateBidForCareTakerControler(req, res) {
-    Bid.updateBidForCareTaker(new Date(req.body.start_date), new Date(req.body.end_date), req.body.category, req.user.username, req.body.pname, req.body.ctuname, new Date(req.body.bid_date), req.body.is_successful)
+    Bid.updateBidForCareTaker(new Date(req.body.start_date), new Date(req.body.end_date), req.body.category, req.body.poname, req.body.pname, req.user.username, new Date(req.body.bid_date), req.body.is_successful)
       .then(data => {
         Bid.getBidsForCareTaker(req.user.username)
           .then(data => {
