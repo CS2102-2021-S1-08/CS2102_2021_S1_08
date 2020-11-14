@@ -9,7 +9,7 @@ const router = require("express").Router();
 function getController(req, res) {
   getAllLeaves(req.user.username)
     .then(data => {
-      res.render('leave', { user: req.user.username, data: data.rows })
+      res.render('leave', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
     })
     .catch(err => {
       res.render('error', { message: "Error", error: err })
@@ -21,7 +21,7 @@ function postController(req, res) {
     .then(data => {
       getAllLeaves(req.user.username)
         .then(data => {
-          res.render('leave', { user: req.user.username, data: data.rows })
+          res.render('leave', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
         })
         .catch(err => {
           res.render('error', { message: "Error", error: err })
@@ -37,7 +37,7 @@ function deleteController(req, res) {
     .then(data => {
       getAllLeaves(req.user.username)
         .then(data => {
-          res.render('leave', { user: req.user.username, data: data.rows })
+          res.render('leave', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
         })
         .catch(err => {
           res.render('error', { message: "Error", error: err })

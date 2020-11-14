@@ -11,10 +11,50 @@
 
 <body>
     <div>
-        <ul class="horizontal">
+        <ul class="horizontal navbar">
             <li><a href="/users/dashboard">Home</a></li>
+            <% if (usertype === 'both' || usertype === 'pet_owner') { %>
+            <li>
+                <div class="dropdown">
+                <button class="dropbtn">Pet Owner
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                  <a href="/pets">My Pets</a>
+                  <a href="/bid/find">Place a bid</a>
+                  <a href="/bid/petOwner">My bids</a>
+                </div>
+              </div>
+            </li>
+            <% } %>
+            <% if (usertype === 'both' || usertype === 'care_taker') { %>
+            <li>
+                <div class="dropdown">
+                <button class="dropbtn">Care Taker
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                  <a href="/leave">My Leaves</a>
+                  <a href="/bid/careTaker">Bids for me</a>
+                  <a href="/summary">My monthly summaries</a>
+                </div>
+              </div>
+            </li>
+            <% } %>
+            <% if (usertype === 'admin') { %>
+            <li>
+                <div class="dropdown">
+                <button class="dropbtn">Admin
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                  <a href="/basePrice">Manage base prices</a>
+                </div>
+              </div>
+            </li>
+            <% } %>
             <li style="float:right"><a href="/users/logout">Logout</a></li>
-            <li style="float:right"><div>Logged in as <%= user %></div></li>
+            <li style="float:right"><a>Logged in as <%= user %></a></li>
 
         </ul>
     </div>

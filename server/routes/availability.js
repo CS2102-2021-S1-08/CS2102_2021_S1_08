@@ -8,7 +8,7 @@ const router = require("express").Router()
 function getController(req, res) {
   getAllAvailabilitiesForCareTaker(req.user.username)
     .then(data => {
-      res.render('availability', { user: req.user.username, data: data.rows })
+      res.render('availability', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
     })
     .catch(err => {
       res.render('error', { error: err })
@@ -20,7 +20,7 @@ function postController(req, res) {
     .then(data => {
       getAllAvailabilities(req.user.username)
         .then(data => {
-          res.render('availability', { user: req.user.username, data: data.rows })
+          res.render('availability', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
         })
         .catch(err => {
           res.render('error', { message: "Error", error: err })
@@ -36,7 +36,7 @@ function deleteController(req, res) {
     .then(data => {
       getAllAvailabilities(req.user.username)
         .then(data => {
-          res.render('availability', { user: req.user.username, data: data.rows })
+          res.render('availability', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
         })
         .catch(err => {
           res.render('error', { message: "Error", error: err })

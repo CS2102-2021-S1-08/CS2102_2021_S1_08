@@ -11,7 +11,7 @@ const accountType = function(req,res){
 const dashboardGet = function (req, res) {
     console.log(req.body)
     let result = getUserType(req.user.username)
-    result.then(response => res.render("dashboard", { user: req.user.username, account: response.rows[0].coalesce}))
+    result.then(response => res.render("dashboard", { user: req.user.username, usertype: req.user.usertype, usertype: req.user.usertype, account: response.rows[0].coalesce}))
 };
 
 router.get('/', (req, res) => dashboardGet(req, res));

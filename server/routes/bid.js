@@ -13,7 +13,7 @@ const {
   function getAvailabilitiesForPetOwnerController(req, res) {
     getAllAvailabilitiesForPetOwner(req.user.username, req.body.bid_date, req.body.category)
         .then(data => {
-            res.render('bidFindAvailability', { user: req.user.username, data: data.rows })
+            res.render('bidFindAvailability', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
         })
         .catch(err => {
             res.render('error',  { message: "Error", error: err })
@@ -23,7 +23,7 @@ const {
   function getBidForPetOwnerController(req, res) {
     Bid.getBidsForPetOwner(req.user.username)
       .then(data => {
-        res.render('bidPetOwner', { user: req.user.username, data: data.rows })
+        res.render('bidPetOwner', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
       })
       .catch(err => {
         res.render('error',  { message: "Error", error: err })
@@ -35,7 +35,7 @@ const {
       .then(data => {
         Bid.getBidsForPetOwner(req.user.username)
           .then(data => {
-            res.render('bidPetOwner', { user: req.user.username, data: data.rows })
+            res.render('bidPetOwner', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
           })
           .catch(err => {
             res.render('error', { message: "Error", error: err })
@@ -51,7 +51,7 @@ const {
       .then(data => {
         Bid.getBidsForPetOwner(req.user.username)
           .then(data => {
-            res.render('bidPetOwner', { user: req.user.username, data: data.rows })
+            res.render('bidPetOwner', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
           })
           .catch(err => {
             res.render('error', { message: "Error", error: err })
@@ -67,7 +67,7 @@ const {
       .then(data => {
         Bid.getBidsForPetOwner(req.user.username)
           .then(data => {
-            res.render('bidPetOwner', { user: req.user.username, data: data.rows })
+            res.render('bidPetOwner', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
           })
           .catch(err => {
             res.render('error', { message: "Error", error: err })
@@ -81,7 +81,7 @@ const {
   function getBidForCareTakerController(req, res) {
     Bid.getBidsForCareTaker(req.user.username)
       .then(data => {
-        res.render('bidCareTaker', { user: req.user.username, data: data.rows })
+        res.render('bidCareTaker', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
       })
       .catch(err => {
         res.render('error',  { message: "Error", error: err })
@@ -93,7 +93,7 @@ const {
       .then(data => {
         Bid.getBidsForCareTaker(req.user.username)
           .then(data => {
-            res.render('bidCareTaker', { user: req.user.username, data: data.rows })
+            res.render('bidCareTaker', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
           })
           .catch(err => {
             res.render('error', { message: "Error", error: err })
@@ -122,7 +122,7 @@ const {
     .post(updateBidForCareTakerControler);
   
   router.route("/find")
-    .get(function(req, res) { res.render('bidFindAvailability', { user: req.user.username, data: [] }) })
+    .get(function(req, res) { res.render('bidFindAvailability', { user: req.user.username, usertype: req.user.usertype, data: [] }) })
     .post(getAvailabilitiesForPetOwnerController)
 
 

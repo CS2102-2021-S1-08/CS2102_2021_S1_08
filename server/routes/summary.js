@@ -53,7 +53,7 @@ async function viewMonthlySummaryForCurrentYearMonthAsCaretaker(req, res) {
 function getMonthlySummariesForCareTakerController(req, res) {
   getMonthlySummariesForCareTaker(req.user.username)
     .then(data => {
-      res.render('summary', { user: req.user.username, data: data.rows })
+      res.render('summary', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
     })
     .catch(err => {
       res.render('error', { message: "Error", error: err })
