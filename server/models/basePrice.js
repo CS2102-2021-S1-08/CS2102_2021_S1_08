@@ -40,8 +40,7 @@ function viewAllBasePrices() {
   return pool.query(`
     SELECT *
     FROM base_prices
-    `,
-    [category]
+    `
   )
 }
 

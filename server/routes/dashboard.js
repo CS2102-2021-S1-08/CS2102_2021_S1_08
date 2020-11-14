@@ -18,7 +18,4 @@ const dashboardGet = function (req, res) {
 
 router.get('/', (req, res) => dashboardGet(req, res));
 
-router.use('/pets', pet)
-router.use('/bids', bid)
-
 module.exports = router;

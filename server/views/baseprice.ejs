@@ -4,58 +4,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <title>PetCareService</title>
 </head>
 
 <body>
-    <a href="/users/dashboard">Back</a>
-    <h1>Dashboard</h1>
-    <h4>Hello <%= user %></h4>
-    <div style="width:800px;">
-        <div style="width:300px; float:left;">
-        <h4>Add a base price: </h4>
-        <form action="/basePrice/" method="post">
-            <label for="category">Enter pet category: </label>
-            <input id="category" type="text" name="category" value="Category">
-            <label for="price">Enter price: </label>
-            <input id="category" type="int" name="category" value="Price">
-            <input type="submit" value="OK">
-        </form>
-        
-        </div>
-        <div style="width:300px; float:right;">
-        <div class="form-header">
-            <h4>Delete a base price: </h4>
-        </div>
-        <form action="/users/dashboard/basePrice/delete/" method="post">
-            <label for="category">Enter category: </label>
-            <input id="category" type="text" name="category" value="Category">
-            <input type="submit" value="OK">
-        </form>
-        </div>
+    <div>
+        <ul class="horizontal">
+            <li><a href="/users/dashboard">Home</a></li>
+            <li style="float:right"><a href="/users/logout">Logout</a></li>
+            <li style="float:right"><div>Logged in as <%= user %></div></li>
+
+        </ul>
     </div>
-    
-    <div style="clear: both;"></div>
-    
-    <h4>All Base Prices</h4>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Category</th>
-            <th scope="col">Price</th>
-        </tr>
-        </thead>
-        <tbody>
-        <% for(var i=0; i<data.length; i++) { %>
+        
+    <div class="content">
+        <div>
+            <form class="pure-form-stacked" action="/basePrice/" method="post">
+                <legend>Add a base price</legend>
+                <label for="category">Enter pet category: </label>
+                <input id="category" type="text" name="category" placeholder="Category">
+                <label for="price">Enter price: </label>
+                <input id="price" type="number" name="price" placeholder="Price">
+                <input type="submit" value="OK">
+            </form>
+        </div>
+
+        <div style="clear: both;"></div>
+        
+        <h4>All Base Prices</h4>
+        <table class="pure-table pure-table-bordered">
+            <thead>
             <tr>
-                <td><%= data[i].category%></td>
-                <td><%= data[i].price%></td>
-                </td>
+                <th scope="col">Category</th>
+                <th scope="col">Price</th>
+                <th scope="col">Delete</th>
             </tr>
-        <% } %>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            <% for(var i=0; i<data.length; i++) { %>
+                <tr>
+                    <td><%= data[i].category%></td>
+                    <td>
+                        <form class="pure-form" action="/basePrice/update" method="post">
+                            <input id="category" type="hidden" name="category" value="<%= data[i].category %>">
+                            <input id="price" type="number" name="price" value="<%= data[i].price %>">
+                            <input type="submit" value="Update">
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/basePrice/delete" method="post">
+                            <input id="category" type="hidden" name="category" value="<%= data[i].category %>">
+                            <input type="submit" value="DELETE">
+                        </form>
+                    </td>
+                </tr>
+            <% } %>
+            </tbody>
+        </table>
+    </div>
 </body>
 
 </html>

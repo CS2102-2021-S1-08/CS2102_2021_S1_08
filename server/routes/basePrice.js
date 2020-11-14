@@ -3,6 +3,7 @@
  */ 
 
 const router = require("express").Router()
+
 const {
     checkAuthenticatedAsAdmin,
   } = require("../commons/auth");
@@ -14,51 +15,73 @@ const {
     updateBasePrice
   } = require("../models/basePrice");
 
-// TODO: use middleware checkAuthenticatedAsAdmin
-// TODO: Admin can view base prices
-async function viewAllBasePricesAsAdmin(req, res) {
-    let results = await viewAllBasePrices();
+  function getController(req, res) {
+    viewAllBasePrices()
+      .then(data => {
+        res.render('basePrice', { user: req.user.username, data: data.rows })
+      })
+      .catch(err => {
+        res.render('error',  { message: "Error", error: err })
+      });
+  }
   
-    res.render("basePrices", {
-      user: req.user["username"],
-      data: results,
-    });
+  function postController(req, res) {
+    createBasePrice(req.body.category, req.body.price)
+      .then(data => {
+        viewAllBasePrices()
+          .then(data => {
+            res.render('basePrice', { user: req.user.username, data: data.rows })
+          })
+          .catch(err => {
+            res.render('error', { message: "Error", error: err })
+        })
+      })
+      .catch(err => {
+        res.render('error', { message: "Error",error: err })
+      })
+  }
+  
+  function updateController(req, res) {
+    updateBasePrice(req.body.category, req.body.price)
+      .then(data => {
+        viewAllBasePrices()
+          .then(data => {
+            res.render('basePrice', { user: req.user.username, data: data.rows })
+          })
+          .catch(err => {
+            res.render('error', { message: "Error", error: err })
+        })
+      })
+      .catch(err => {
+        res.render('error', { message: "Error",error: err })
+      })
   }
 
-// TODO: Admin can add new base prices
-async function addNewBasePriceAsAdmin(req, res) {
-    let { category, price } = req.body
-
-    let results = await createBasePrice(category, price);  
-
-    res.render("basePrices", {
-      user: req.user["username"],
-      data: results,
-    });
+  function deleteController(req, res) {
+    deleteBasePrice(req.body.category)
+      .then(data => {
+        viewAllBasePrices()
+          .then(data => {
+            res.render('basPrice', { user: req.user.username, data: data.rows })
+          })
+          .catch(err => {
+            res.render('error', { message: "Error", error: err })
+        })
+      })
+      .catch(err => {
+        res.render('error', { message: "Error", error: err })
+      })
   }
+  
+  // TODO: Add authentication middleware NOT A PRIORITY
+  router.route("/")
+    .get(getController)
+    .post(postController)
 
-// TODO: Admin can modify base prices
-async function updateBasePriceAsAdmin(req, res) {
-    let { category, price } = req.body
+  router.route("/update")
+    .post(updateController)
 
-    let results = await updateBasePrice(category, price);  
-
-    res.render("basePrices", {
-      user: req.user["username"],
-      data: results,
-    });
-  }
-
-// TODO: Admin can remove base prices
-async function removeBasePriceAsAdmin(req, res) {
-    let { category } = req.body
-
-    let results = await deleteBasePrice(category);  
-
-    res.render("basePrices", {
-      user: req.user["username"],
-      data: results,
-    });
-  }
-
-module.exports = router;
+  router.route("/delete")
+    .post(deleteController);
+  
+  module.exports = router;
