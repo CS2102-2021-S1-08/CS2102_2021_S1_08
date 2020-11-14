@@ -7,10 +7,12 @@ const passport = require("passport");
 const initializePassport = require("./passportConfig");
 const availabilityRouter = require("./routes/availability");
 const authRouter = require("./routes/auth");
+const basePriceRouter = require("./routes/basePrice");
 const leaveRouter = require("./routes/leaves");
 const careTakerRouter = require("./routes/careTakers");
 const summaryRouter = require("./routes/summary");
 const petRouter = require("./routes/pet");
+const { checkNotAuthenticated } = require("./commons/auth");
 
 initializePassport(passport);
 
@@ -40,11 +42,12 @@ app.get("/", (req, res) => {
 
 // TODO rename /users to /auth
 app.use("/users", authRouter);
-app.use("/availability", availabilityRouter);
-app.use("/leave", leaveRouter);
-app.use("/caretaker", careTakerRouter);
-app.use('/pets', petRouter)
-app.use("/monthlysummary", summaryRouter);
+app.use("/availability", checkNotAuthenticated, availabilityRouter);
+app.use("/basePrice", checkNotAuthenticated, basePriceRouter);
+app.use("/leave", checkNotAuthenticated, leaveRouter);
+app.use("/caretaker", checkNotAuthenticated, careTakerRouter);
+app.use('/pets', checkNotAuthenticated, petRouter)
+app.use("/monthlysummary", checkNotAuthenticated, summaryRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

@@ -7,25 +7,13 @@ const {
     checkAuthenticatedAsCareTaker,
     checkAuthenticatedAsPetOwner,
   } = require("../commons/auth");
-  const {
-    getBidAsPetOwner,
-    createBid,
-    deleteBid,
-    updateRating,
-    deleteRating,
-    updateReview,
-    deleteReview,
-    markBidAsSuccessful
-  } = require("../models/bid");
+const bids = require("../models/bid")
 
 // TODO: use middleware checkAuthenticatedAsPetOwner
 // TODO: Pet owner can get all bids they have made (GET)
-async function getBidsAsPetOwner(req, res) {
-    let results = await getBidAsPetOwner(req.user["username"]);
-  
-    res.render("bidsMade", {
-        user: req.user["username"],
-        data: results,
+const getBidsAsPetOwner = function(req, res) {
+    bids.getBidAsPetOwner(req.user.username).then(data => {
+        res.render("bid", {user: req.user["username"], data: data.rows})
     });
   }
 
@@ -187,5 +175,8 @@ const acceptBidAsCareTaker = function (req, res) {
         data: results,
     });
 }
+
+router.route('/')
+    .get(getBidsAsPetOwner)
 
 module.exports = router;
