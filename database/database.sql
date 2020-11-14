@@ -146,6 +146,7 @@ RETURNS TRIGGER LANGUAGE PLPGSQL AS $$
 			  WHERE NEW.start_date <= end_date
 				AND NEW.end_date >= start_date
 				AND category = NEW.category
+				AND username = NEW.username
 		)
 		THEN RAISE EXCEPTION 'cannot have availability due to overlap';
 		ELSE RETURN NEW;
