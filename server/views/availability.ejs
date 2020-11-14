@@ -69,7 +69,13 @@
                 <label for="end_date">Enter end date: </label>
                 <input id="end_date" type="date" name="end_date" value="">
                 <label for="category">Enter pet category: </label>
-                <input id="category" type="text" name="category" value="Category">
+                <!-- <input id="category" type="text" name="category" value="Category"> -->
+                <select id="category" name="category">
+                  <option value="Select category" disabled>Choose pet category</option>
+                  <% for(var i=0; i<categories.length; i++) { %>
+                    <option value="<%= categories[i].category %>" selected><%= categories[i].category %></option>
+                  <% } %>
+                </select>
                 <input type="submit" value="OK">
             </form>
         </div>
