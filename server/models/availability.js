@@ -6,7 +6,7 @@ const { pool } = require("../dbConfig");
 // GET for pet owner
 function getAllAvailabilitiesForPetOwner(username, date, category) {
   return pool.query(`
-    SELECT start_date, end_date, category, price
+    SELECT start_date, end_date, category
     FROM availabilities
     WHERE username = $1::text
     AND start_date < $2::date
@@ -20,7 +20,7 @@ function getAllAvailabilitiesForPetOwner(username, date, category) {
 // GET for care takers
 function getAllAvailabilitiesForCareTaker(username) {
   return pool.query(`
-    SELECT start_date, end_date, category, price
+    SELECT start_date, end_date, category
     FROM availabilities
     WHERE username = $1::text
     `,
