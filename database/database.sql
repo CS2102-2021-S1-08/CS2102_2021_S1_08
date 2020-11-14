@@ -221,13 +221,14 @@ RETURNS TRIGGER LANGUAGE PLPGSQL AS $$
 		ELSE INSERT INTO monthly_summary
 			VALUES (NEW.ctuname, EXTRACT(YEAR FROM NEW.bid_date), EXTRACT(MONTH FROM NEW.bid_date) + 1, 1, salaryToAdd);
 		END IF;
+		RETURN NULL;
 	END;
 $$;
 
 CREATE TRIGGER add_successful_bid_to_monthly_summary
 AFTER UPDATE ON bids
 FOR EACH ROW
-WHEN (NEW.is_successful = TRUE)
+WHEN (NEW.is_successful IS TRUE)
 EXECUTE PROCEDURE add_successful_bid_to_monthly_summary();
 
 --- Leaves
