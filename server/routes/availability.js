@@ -22,7 +22,7 @@ async function getController(req, res) {
         user: req.user.username,
         usertype: req.user.usertype,
         data: data.rows,
-        categories: categories.rows
+        categories: categories.rows,
       });
     })
     .catch((err) => {
@@ -30,20 +30,25 @@ async function getController(req, res) {
     });
 }
 
-function postController(req, res) {
+async function postController(req, res) {
+  let categories = await getAllCategories();
+
   createAvailability(
     req.user.username,
     new Date(req.body.start_date),
     new Date(req.body.end_date),
     req.body.category
   )
-    .then((data) => {
+    .then(
+      (data) => {
       getAllAvailabilitiesForCareTaker(req.user.username)
         .then((data) => {
+          console.log(data);
           res.render("availability", {
             user: req.user.username,
             usertype: req.user.usertype,
             data: data.rows,
+            categories: categories.rows,
           });
         })
         .catch((err) => {
@@ -56,7 +61,9 @@ function postController(req, res) {
     });
 }
 
-function deleteController(req, res) {
+async function deleteController(req, res) {
+  let categories = await getAllCategories();
+
   deleteAvailabilty(
     req.user.username,
     new Date(req.body.start_date),
@@ -70,6 +77,7 @@ function deleteController(req, res) {
             user: req.user.username,
             usertype: req.user.usertype,
             data: data.rows,
+            categories: categories.rows,
           });
         })
         .catch((err) => {
