@@ -18,7 +18,7 @@ const {
   function getController(req, res) {
     viewAllBasePrices()
       .then(data => {
-        res.render('basePrice', { user: req.user.username, data: data.rows })
+        res.render('basePrice', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
       })
       .catch(err => {
         res.render('error',  { message: "Error", error: err })
@@ -30,7 +30,7 @@ const {
       .then(data => {
         viewAllBasePrices()
           .then(data => {
-            res.render('basePrice', { user: req.user.username, data: data.rows })
+            res.render('basePrice', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
           })
           .catch(err => {
             res.render('error', { message: "Error", error: err })
@@ -46,7 +46,7 @@ const {
       .then(data => {
         viewAllBasePrices()
           .then(data => {
-            res.render('basePrice', { user: req.user.username, data: data.rows })
+            res.render('basePrice', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
           })
           .catch(err => {
             res.render('error', { message: "Error", error: err })
@@ -62,7 +62,7 @@ const {
       .then(data => {
         viewAllBasePrices()
           .then(data => {
-            res.render('basPrice', { user: req.user.username, data: data.rows })
+            res.render('basPrice', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
           })
           .catch(err => {
             res.render('error', { message: "Error", error: err })

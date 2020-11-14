@@ -10,7 +10,7 @@ const { checkNotAuthenticatedAsPetOwner } = require("../commons/auth")
 const getPets = function (req, res) {
     pets.get(req.user.username).then(data => {
         console.dir(data.rows)
-        res.render('pets', {user:req.user.username, data: data.rows})
+        res.render('pets', {user:req.user.username, usertype:req.user.usertype, data: data.rows})
     })
 }
 

@@ -3,6 +3,7 @@
  */
 
 const { pool } = require("../dbConfig");
+const { getUserType } = require("../models/users");
 
 exports.checkAuthenticated = function (req, res, next) {
   if (req.isAuthenticated()) {
@@ -13,9 +14,16 @@ exports.checkAuthenticated = function (req, res, next) {
 
 exports.checkNotAuthenticated = function (req, res, next) {
   if (req.isAuthenticated()) {
-    return next();
+    getUserType(req.user.username)
+      .then(result => {
+        req.user.usertype = result.rows[0].coalesce;
+        next();
+      }).catch(err => {
+        next(err);
+      })
+  } else {
+    res.redirect("/users/login");
   }
-  res.redirect("/users/login");
 };
 
 exports.checkAuthenticatedAsAdmin = function (req, res, next) {

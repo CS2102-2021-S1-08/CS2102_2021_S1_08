@@ -61,28 +61,46 @@
     </div>
         
     <div class="content">
+        <div>
+            <form class="pure-form-stacked" action="/bid/find" method="post">
+                <legend>Find an availability</legend>
+                <label for="bid_date">Enter bid date: </label>
+                <input id="bid_date" type="date" name="bid_date">
+                <label for="category">Enter pet category: </label>
+                <input id="category" type="text" name="category" placeholder="Category">
+                <input type="submit" value="OK">
+            </form>
+        </div>
+    
     <div style="clear: both;"></div>
-
-    <h4>Your monthly summaries</h4>
+    
+    <h4>Availabilities</h4>
     <table class="pure-table pure-table-bordered">
         <thead>
+        <tr>
+          <th scope="col">Care Taker</th>
+          <th scope="col">Add?</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for(var i=0; i<data.length; i++) { %>
             <tr>
-                <th scope="col">Year</th>
-                <th scope="col">Month</th>
-                <th scope="col">Pet Days</th>
-                <th scope="col">Salary</th>
+                <td><%= data[i].ctuname%></td>
+                <td>
+                    <form action="/bid/petOwner" method="post">
+                      <input id="start_date" type="hidden" name="start_date" value="<%= data[i].start_date %>">
+                      <input id="end_date" type="hidden" name="end_date" value="<%= data[i].end_date %>">
+                      <input id="category" type="hidden" name="category" value="<%= data[i].category %>">
+                      <input id="poname" type="hidden" name="poname" value="<%= data[i].poname %>">
+                      <input id="pname" type="hidden" name="pname" value="<%= data[i].pname %>">
+                      <input id="ctuname" type="hidden" name="ctuname" value="<%= data[i].ctuname %>">
+                      <input id="bid_date" type="hidden" name="bid_date" value="<%= data[i].bid_date %>">
+                      <input type="submit" value="Add">
+                    </form>
+                </td>
             </tr>
-            </thead>
-            <tbody>
-            <% for(var i=0; i<data.length; i++) { %>
-                <tr>
-                    <td><%= data[i].year%></td>
-                    <td><%= data[i].month%></td>
-                    <td><%= data[i].pet_days%></td>
-                    <td><%= data[i].salary%></td>
-                </tr>
-            <% } %>
-            </tbody>
+        <% } %>
+        </tbody>
     </table>
 </body>
 

@@ -61,28 +61,62 @@
     </div>
         
     <div class="content">
-    <div style="clear: both;"></div>
+    
+    <button onclick="window.location.href='/bid/find'">Add a bid</button>
 
-    <h4>Your monthly summaries</h4>
+    <div style="clear: both;"></div>
+    
+    <h4>Your Pending Bids</h4>
     <table class="pure-table pure-table-bordered">
         <thead>
+        <tr>
+            <th scope="col">Care Taker</th>
+            <th scope="col">Taking care of</th>
+            <th scope="col">Bid Date</th>
+            <th scope="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for(var i=0; i<data.length; i++) { %>
             <tr>
-                <th scope="col">Year</th>
-                <th scope="col">Month</th>
-                <th scope="col">Pet Days</th>
-                <th scope="col">Salary</th>
+                <td><%= data[i].ctuname%></td>
+                <td><%= data[i].pname%></td>
+                <td><%= data[i].bid_date%></td>
+                <td>
+                    <form action="/bid/petOwner/update" method="post">
+                        <input id="start_date" type="hidden" name="start_date" value="<%= data[i].start_date %>">
+                        <input id="end_date" type="hidden" name="end_date" value="<%= data[i].end_date %>">
+                        <input id="category" type="hidden" name="category" value="<%= data[i].category %>">
+                        <input id="poname" type="hidden" name="poname" value="<%= data[i].poname %>">
+                        <input id="pname" type="hidden" name="pname" value="<%= data[i].pname %>">
+                        <input id="ctuname" type="hidden" name="ctuname" value="<%= data[i].ctuname %>">
+                        <input id="bid_date" type="hidden" name="bid_date" value="<%= data[i].bid_date %>">
+                        <input type="submit" value="DELETE">
+                    </form>
+                </td>
             </tr>
-            </thead>
-            <tbody>
+        <% } %>
+        </tbody>
+    </table>
+
+    <h4>Your Successful Bids</h4>
+    <table class="pure-table pure-table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">Care Taker</th>
+            <th scope="col">Taking care of</th>
+            <th scope="col">Bid Date</th>
+        </tr>
+        </thead>
+        <tbody>
             <% for(var i=0; i<data.length; i++) { %>
                 <tr>
-                    <td><%= data[i].year%></td>
-                    <td><%= data[i].month%></td>
-                    <td><%= data[i].pet_days%></td>
-                    <td><%= data[i].salary%></td>
+                    <td><%= data[i].ctuname%></td>
+                    <td><%= data[i].pname%></td>
+                    <td><%= data[i].bid_date%></td>
                 </tr>
             <% } %>
-            </tbody>
+        </tbody>
     </table>
 </body>
 

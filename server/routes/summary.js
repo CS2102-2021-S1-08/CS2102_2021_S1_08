@@ -10,6 +10,7 @@ const {
 const {
   getMonthlySummary,
   getAllMonthlySummary,
+  getMonthlySummariesForCareTaker
 } = require("../models/summary");
 
 module.exports = router;
@@ -49,14 +50,27 @@ async function viewMonthlySummaryForCurrentYearMonthAsCaretaker(req, res) {
   });
 }
 
-router
-  .route("/admin")
-  .get(checkAuthenticatedAsAdmin, viewMonthlySummaryAsAdmin);
-router
-  .route("/me")
-  .get(
-    checkAuthenticatedAsCareTaker,
-    viewMonthlySummaryForCurrentYearMonthAsCaretaker
-  );
+function getMonthlySummariesForCareTakerController(req, res) {
+  getMonthlySummariesForCareTaker(req.user.username)
+    .then(data => {
+      res.render('summary', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
+    })
+    .catch(err => {
+      res.render('error', { message: "Error", error: err })
+    });
+}
+
+// router
+//   .route("/admin")
+//   .get(checkAuthenticatedAsAdmin, viewMonthlySummaryAsAdmin);
+// router
+//   .route("/me")
+//   .get(
+//     checkAuthenticatedAsCareTaker,
+//     viewMonthlySummaryForCurrentYearMonthAsCaretaker
+//   );
+
+router.route("/")
+  .get(getMonthlySummariesForCareTakerController);
 
 module.exports = router;
