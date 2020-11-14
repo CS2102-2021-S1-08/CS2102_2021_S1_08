@@ -1,12 +1,12 @@
 /**
  * Router for availabilities 
  */
-const { getAllAvailabilities, deleteAvailabilty, createAvailability } = require("../models/availability");
+const { getAllAvailabilitiesForCareTaker, deleteAvailabilty, createAvailability } = require("../models/availability");
 
 const router = require("express").Router()
 
 function getController(req, res) {
-  getAllAvailabilities(req.user.username)
+  getAllAvailabilitiesForCareTaker(req.user.username)
     .then(data => {
       res.render('availability', { user: req.user.username, data: data.rows })
     })
