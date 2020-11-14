@@ -37,6 +37,10 @@ transform: translate(-50%, -50%);
 color: white;
 }
 
+table {
+  width: 100%;
+}
+
 ul {
   list-style-type: none;
   margin: 0;
