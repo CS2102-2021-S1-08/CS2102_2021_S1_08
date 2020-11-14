@@ -1,5 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <title>PetCareService</title>
+</head>
+
+<body>
+  <div>
+      <ul class="horizontal">
+          <li><a href="/users/dashboard">Home</a></li>
+          <li style="float:right"><a href="/users/logout">Logout</a></li>
+          <li style="float:right"><div>Logged in as <%= user %></div></li>
+
+      </ul>
+  </div>
+
+<% if (message) { %>
 <h1><%= message %></h1>
+<% } %>
 <% if (error) { %>
 <h2><%= error.status %></h2>
 <pre><%= error.stack %></pre>
 <% } %>
+
+</div>
