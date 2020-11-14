@@ -1,0 +1,1 @@
+insert into pcs_admins (username, password) values ('admin', 'admin1');
