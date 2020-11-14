@@ -19,7 +19,7 @@ const { pool } = require("../dbConfig");
 // GET
 function getAllAvailabilities(username) {
   return pool.query(`
-    SELECT start_date, end_date, category, price
+    SELECT start_date, end_date, category
     FROM availabilities
     WHERE username = $1::text
     `,

@@ -11,6 +11,9 @@ function getController(req, res) {
       res.render('availability', { user: req.user.username, data: data.rows })
     })
     .catch(err => {
+        console.log('errorstart')
+        console.log(err)
+        console.log('errorend')
       res.render('error', { error: err })
     });
 }
