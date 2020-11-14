@@ -77,6 +77,12 @@
                 <a href="/users/dashboard/bids">Check your bids</a>
             </h3>
         <% } %>
+        <% if (account == "admin") { %>
+        <h3>
+          As an admin you can:
+          <a href="/basePrice">Manage base prices</a>
+        </h3>
+        <% } %>
     </div>
 </body>
 

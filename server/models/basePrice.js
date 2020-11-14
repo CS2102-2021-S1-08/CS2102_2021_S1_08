@@ -44,6 +44,7 @@ function viewAllBasePrices() {
   )
 }
 
+
 // UPDATE
 function updateBasePrice(category, price) {
   return pool.query(`
@@ -55,8 +56,18 @@ function updateBasePrice(category, price) {
   )
 }
 
+// VIEW
+function getAllCategories() {
+  return pool.query(`
+    SELECT category
+    FROM base_prices
+    `
+  )
+}
+
 exports.getBasePrice = getBasePrice;
 exports.createBasePrice = createBasePrice;
 exports.deleteBasePrice = deleteBasePrice;
 exports.viewAllBasePrices = viewAllBasePrices;
 exports.updateBasePrice = updateBasePrice;
+exports.getAllCategories = getAllCategories;
