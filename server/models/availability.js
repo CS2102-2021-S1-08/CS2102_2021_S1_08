@@ -8,12 +8,11 @@ function getAllAvailabilitiesForPetOwner(username, date, category) {
   return pool.query(`
     SELECT *
     FROM availabilities
-    WHERE username = $1::text
-    AND start_date < $2::date
+    WHERE start_date < $2::date
     AND $2::date < end_date
     AND category = $3::text
     `,
-    [username, date, category]
+    [date, category]
   )
 }
 
