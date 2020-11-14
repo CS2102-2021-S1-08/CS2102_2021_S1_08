@@ -11,7 +11,7 @@ const { pool } = require("../dbConfig");
 // NOTE: need to change full_timers table to another
 exports.getCareTakerTotalPetDays = async function (username) {
   const query = `
-      SELECT SUM(DATE_PART('day', B.bid_end_date) - DATE_PART('day', B.bid_start_date) + 1)
+      SELECT COUNT(*) total_pet_days
       FROM full_timers F, availabilities A, bids B
       WHERE F.username = $1
       AND F.username = A.username
@@ -37,22 +37,14 @@ exports.getCareTakerTotalPetDays = async function (username) {
 // Assumption: bids cannot go beyond two months (both bid_start < month_start and bid_end > month_end)
 exports.getCareTakerTotalPetDaysForMonth = async function (username, month) {
   const query = `
-      SELECT 
-        SUM(
-        CASE
-          WHEN EXTRACT(MONTH FROM B.bid_start_date) = $2 AND EXTRACT(MONTH FROM B.bid_end_date) = $2
-          THEN B.bid_end_date - B.bid_start_date + 1
-          WHEN EXTRACT(MONTH FROM B.bid_start_date) = $2 AND EXTRACT(MONTH FROM B.bid_end_date) <> $2
-          THEN (date_trunc('MONTH', B.bid_start_date) + INTERVAL '1 MONTH - 1 day')::DATE - B.bid_start_date + 1
-          WHEN EXTRACT(MONTH FROM B.bid_start_date) != $2 AND EXTRACT(MONTH FROM B.bid_end_date) = $2
-          THEN B.bid_end_date - date_trunc('MONTH',now())::DATE + 1
-        END) pet_days
+        SELECT COUNT(*) pet_days_for_month
         FROM full_timers F, availabilities A, bids B
         WHERE F.username = $1
           AND F.username = A.username
           AND B.ctuname = A.username
           AND B.start_date = A.start_date
           AND B.end_date = A.end_date
+          AND EXTRACT(MONTH FROM B.bid_date) = $2
           AND B.category = A.category
           AND B.is_successful = TRUE;
       `;

@@ -4,16 +4,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <title>Stats</title>
 </head>
 
 <body>
-    <a href="/users/logout">Logout</a>
-    <h1>Hello, caretaker <%= user %></h1>
-    <h1>You have <%= petDays %> Pet-Days logged in total</h1>
-    <h1>You have <%= monthPetDays %> Pet-Days logged for this month</h1>
-
+    <div>
+        <ul class="horizontal navbar">
+            <li><a href="/users/dashboard">Home</a></li>
+            <% if (usertype === 'both' || usertype === 'pet_owner') { %>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn">Pet Owner
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="/pets">My Pets</a>
+                        <a href="/bid/find">Place a bid</a>
+                        <a href="/bid/petOwner">My bids</a>
+                    </div>
+                </div>
+            </li>
+            <% } %>
+            <% if (usertype === 'both' || usertype === 'care_taker') { %>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn">Care Taker
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="/availability">My availabilities</a>
+                        <a href="/leave">My Leaves</a>
+                        <a href="/bid/careTaker">Bids for me</a>
+                        <a href="/summary">My monthly summaries</a>
+                        <a href="/caretaker/info">monthly stats</a>
+                    </div>
+                </div>
+            </li>
+            <% } %>
+            <% if (usertype === 'admin') { %>
+            <li>
+                <div class="dropdown">
+                    <button class="dropbtn">Admin
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="/basePrice">Manage base prices</a>
+                    </div>
+                </div>
+            </li>
+            <% } %>
+            <li style="float:right"><a href="/users/logout">Logout</a></li>
+            <li style="float:right"><a>Logged in as <%= user %></a></li>
+    
+        </ul>
+    </div>
+    <div class="content">
+        <h2>Hello, caretaker <%= user %></h2>
+        <h3>You have <%= petDays %> Pet-Days logged in total</h3>
+        <h3>You have <%= monthPetDays %> Pet-Days logged for this month</h3>
+    </div>
 </body>
-
 </html>

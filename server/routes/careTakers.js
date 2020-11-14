@@ -24,8 +24,11 @@ async function viewCareTakerTotalPetDays(req, res) {
 
   res.render("careTaker", {
     user: req.user["username"],
-    petDays: resultsGetCareTakerTotalPetDays["sum"],
-    monthPetDays: parseInt(resultsGetCareTakerTotalPetDaysForMonth["pet_days"]),
+    usertype: req.user.usertype,
+    petDays: resultsGetCareTakerTotalPetDays["total_pet_days"],
+    monthPetDays: parseInt(
+      resultsGetCareTakerTotalPetDaysForMonth["pet_days_for_month"]
+    ),
   });
 }
 

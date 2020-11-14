@@ -49,6 +49,8 @@ app.use("/leave", checkNotAuthenticated, leaveRouter);
 app.use("/bid", checkNotAuthenticated, bidRouter);
 app.use('/pets', checkNotAuthenticated, petRouter)
 app.use("/summary", checkNotAuthenticated, summaryRouter);
+app.use("/caretaker", checkNotAuthenticated, careTakerRouter);
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
