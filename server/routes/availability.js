@@ -27,7 +27,8 @@ function postController(req, res) {
       })
     })
     .catch(err => {
-      res.render('error', { message: "Error",error: err })
+      res.status(200);
+      res.redirect("back");
     })
 }
 
