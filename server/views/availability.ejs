@@ -4,41 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <title>PetCareService</title>
 </head>
 
 <body>
-    <a href="/users/dashboard">Back</a>
-    <h1>Dashboard</h1>
-    <h4>Hello <%= user %></h4>
-    <div style="width:800px;">
-        <div style="width:300px; float:left;">
-        <h4>Add an availability: </h4>
-        <form action="/availability/" method="post">
-            <label for="start_date">Enter start date: </label>
-            <input id="start_date" type="date" name="start_date" value="">
-            <label for="end_date">Enter end date: </label>
-            <input id="end_date" type="date" name="end_date" value="">
-            <label for="category">Enter pet category: </label>
-            <input id="category" type="text" name="category" value="Category">
-            <input type="submit" value="OK">
-        </form>
-        </div>
-        <div style="width:300px; float:right;">
-        <div class="form-header">
-            <h4>Delete a pet: </h4>
-        </div>
-        </div>
+    <div>
+        <ul class="horizontal">
+            <li><a href="/users/dashboard">Home</a></li>
+            <li style="float:right"><a href="/users/logout">Logout</a></li>
+            <li style="float:right"><div>Logged in as <%= user %></div></li>
+
+        </ul>
     </div>
+        
+    <div class="content">
+        <div>
+            <form class="pure-form-stacked" action="/availability/" method="post">
+                <legend>Add an availability</legend>
+                <label for="start_date">Enter start date: </label>
+                <input id="start_date" type="date" name="start_date" value="">
+                <label for="end_date">Enter end date: </label>
+                <input id="end_date" type="date" name="end_date" value="">
+                <label for="category">Enter pet category: </label>
+                <input id="category" type="text" name="category" value="Category">
+                <input type="submit" value="OK">
+            </form>
+        </div>
+    
     <div style="clear: both;"></div>
+    
     <h4>Your Availabilities</h4>
-    <table class="table">
+    <table class="pure-table pure-table-bordered">
         <thead>
         <tr>
             <th scope="col">Start Date</th>
             <th scope="col">End Date</th>
             <th scope="col">Category</th>
+            <th scope="col">Delete</th>
         </tr>
         </thead>
         <tbody>
