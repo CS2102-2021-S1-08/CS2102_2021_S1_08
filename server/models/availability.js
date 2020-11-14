@@ -3,21 +3,22 @@
  */
 const { pool } = require("../dbConfig");
 
-// TODO SQL QUERIES
-// CREATE TABLE 
-// exports.create_query = `
-//  CREATE TABLE IF NOT EXISTS availability {
-//   username VARCHAR(50) REFERENCES caretaker(username)
-//   start_date DATE,
-//   end_date DATE,
-//   category VARCHAR(50) REFEReNCES baseprice(category),
-//   price INT,
-//   PRIMARY KEY(username, start_date, end_date, category)
-//  } 
-// `
+// GET for pet owner
+function getAllAvailabilitiesForPetOwner(username, date, category) {
+  return pool.query(`
+    SELECT start_date, end_date, category
+    FROM availabilities
+    WHERE username = $1::text
+    AND start_date < $2::date
+    AND $2::date < end_date
+    AND category = $3::text
+    `,
+    [username, date, category]
+  )
+}
 
-// GET
-function getAllAvailabilities(username) {
+// GET for care takers
+function getAllAvailabilitiesForCareTaker(username) {
   return pool.query(`
     SELECT start_date, end_date, category
     FROM availabilities
@@ -31,7 +32,7 @@ function getAllAvailabilities(username) {
 function createAvailability(username, start_date, end_date, category) {
   return pool.query(`
     INSERT INTO availabilities
-    VALUES ($1::text, $2::date, $3::date, $4::text, 0)
+    VALUES ($1::text, $2::date, $3::date, $4::text)
     `,
     [username, start_date, end_date, category]
   )
@@ -49,5 +50,6 @@ function deleteAvailabilty(username, start_date, end_date, category) {
 // TODO
 
 exports.createAvailability = createAvailability
-exports.getAllAvailabilities = getAllAvailabilities
+exports.getAllAvailabilitiesForCareTaker = getAllAvailabilitiesForCareTaker
+exports.getAllAvailabilitiesForPetOwner = getAllAvailabilitiesForPetOwner
 exports.deleteAvailabilty = deleteAvailabilty
