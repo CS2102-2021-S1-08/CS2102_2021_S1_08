@@ -77,20 +77,20 @@
         </tr>
         </thead>
         <tbody>
-        <% for(var i=0; i<data.length; i++) { %>
+        <% for(var i=0; i<data1.length; i++) { %>
             <tr>
-                <td><%= data[i].ctuname%></td>
-                <td><%= data[i].pname%></td>
-                <td><%= data[i].bid_date%></td>
+                <td><%= data1[i].ctuname%></td>
+                <td><%= data1[i].pname%></td>
+                <td><%= data1[i].bid_date%></td>
                 <td>
                     <form action="/bid/petOwner/update" method="post">
-                        <input id="start_date" type="hidden" name="start_date" value="<%= data[i].start_date %>">
-                        <input id="end_date" type="hidden" name="end_date" value="<%= data[i].end_date %>">
-                        <input id="category" type="hidden" name="category" value="<%= data[i].category %>">
-                        <input id="poname" type="hidden" name="poname" value="<%= data[i].poname %>">
-                        <input id="pname" type="hidden" name="pname" value="<%= data[i].pname %>">
-                        <input id="ctuname" type="hidden" name="ctuname" value="<%= data[i].ctuname %>">
-                        <input id="bid_date" type="hidden" name="bid_date" value="<%= data[i].bid_date %>">
+                        <input id="start_date" type="hidden" name="start_date" value="<%= data1[i].start_date %>">
+                        <input id="end_date" type="hidden" name="end_date" value="<%= data1[i].end_date %>">
+                        <input id="category" type="hidden" name="category" value="<%= data1[i].category %>">
+                        <input id="poname" type="hidden" name="poname" value="<%= data1[i].poname %>">
+                        <input id="pname" type="hidden" name="pname" value="<%= data1[i].pname %>">
+                        <input id="ctuname" type="hidden" name="ctuname" value="<%= data1[i].ctuname %>">
+                        <input id="bid_date" type="hidden" name="bid_date" value="<%= data1[i].bid_date %>">
                         <input type="submit" value="DELETE">
                     </form>
                 </td>
@@ -109,11 +109,11 @@
         </tr>
         </thead>
         <tbody>
-            <% for(var i=0; i<data.length; i++) { %>
+            <% for(var i=0; i<data2.length; i++) { %>
                 <tr>
-                    <td><%= data[i].ctuname%></td>
-                    <td><%= data[i].pname%></td>
-                    <td><%= data[i].bid_date%></td>
+                    <td><%= data2[i].ctuname%></td>
+                    <td><%= data2[i].pname%></td>
+                    <td><%= data2[i].bid_date%></td>
                 </tr>
             <% } %>
         </tbody>

@@ -23,7 +23,12 @@ const {
   function getBidForPetOwnerController(req, res) {
     Bid.getBidsForPetOwner(req.user.username)
       .then(data => {
-        res.render('bidPetOwner', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
+        res.render('bidPetOwner', { 
+          user: req.user.username, 
+          usertype: req.user.usertype, 
+          data1: data.rows.filter(row => !row.is_successful || row.is_successful === 'false'),
+          data2: data.rows.filter(row => row.is_successful || row.is_successful === 'true')  
+        })
       })
       .catch(err => {
         res.render('error',  { message: "Error", error: err })
@@ -35,7 +40,12 @@ const {
       .then(data => {
         Bid.getBidsForPetOwner(req.user.username)
           .then(data => {
-            res.render('bidPetOwner', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
+            res.render('bidPetOwner', { 
+              user: req.user.username, 
+              usertype: req.user.usertype, 
+              data1: data.rows.filter(row => !row.is_successful || row.is_successful === 'false'),
+              data2: data.rows.filter(row => row.is_successful || row.is_successful === 'true')  
+            })
           })
           .catch(err => {
             res.render('error', { message: "Error", error: err })
@@ -51,7 +61,12 @@ const {
       .then(data => {
         Bid.getBidsForPetOwner(req.user.username)
           .then(data => {
-            res.render('bidPetOwner', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
+            res.render('bidPetOwner', { 
+              user: req.user.username, 
+              usertype: req.user.usertype, 
+              data1: data.rows.filter(row => !row.is_successful || row.is_successful === 'false'),
+              data2: data.rows.filter(row => row.is_successful || row.is_successful === 'true')  
+            })
           })
           .catch(err => {
             res.render('error', { message: "Error", error: err })
@@ -67,7 +82,12 @@ const {
       .then(data => {
         Bid.getBidsForPetOwner(req.user.username)
           .then(data => {
-            res.render('bidPetOwner', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
+            res.render('bidPetOwner', { 
+              user: req.user.username, 
+              usertype: req.user.usertype, 
+              data1: data.rows.filter(row => !row.is_successful || row.is_successful === 'false'),
+              data2: data.rows.filter(row => row.is_successful || row.is_successful === 'true')  
+            })
           })
           .catch(err => {
             res.render('error', { message: "Error", error: err })
@@ -81,7 +101,12 @@ const {
   function getBidForCareTakerController(req, res) {
     Bid.getBidsForCareTaker(req.user.username)
       .then(data => {
-        res.render('bidCareTaker', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
+        res.render('bidCareTaker', { 
+          user: req.user.username, 
+          usertype: req.user.usertype, 
+          data1: data.rows.filter(row => !row.is_successful || row.is_successful === 'false'),
+          data2: data.rows.filter(row => row.is_successful || row.is_successful === 'true')  
+        })
       })
       .catch(err => {
         res.render('error',  { message: "Error", error: err })
@@ -93,7 +118,12 @@ const {
       .then(data => {
         Bid.getBidsForCareTaker(req.user.username)
           .then(data => {
-            res.render('bidCareTaker', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
+            res.render('bidCareTaker', { 
+              user: req.user.username, 
+              usertype: req.user.usertype, 
+              data1: data.rows.filter(row => !row.is_successful || row.is_successful === 'false'),
+              data2: data.rows.filter(row => row.is_successful || row.is_successful === 'true')  
+            })
           })
           .catch(err => {
             res.render('error', { message: "Error", error: err })
