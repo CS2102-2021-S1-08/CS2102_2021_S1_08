@@ -10,6 +10,7 @@ const authRouter = require("./routes/auth");
 const leaveRouter = require("./routes/leaves");
 const careTakerRouter = require("./routes/careTakers");
 const summaryRouter = require("./routes/summary");
+const petRouter = require("./routes/pet");
 
 initializePassport(passport);
 
@@ -42,6 +43,7 @@ app.use("/users", authRouter);
 app.use("/availability", availabilityRouter);
 app.use("/leave", leaveRouter);
 app.use("/caretaker", careTakerRouter);
+app.use('/pets', petRouter)
 app.use("/monthlysummary", summaryRouter);
 
 app.listen(PORT, () => {

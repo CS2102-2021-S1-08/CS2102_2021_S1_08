@@ -21,7 +21,7 @@
      
     <div class="content">
     <div>
-        <form class="pure-form-stacked" action="/users/dashboard/pets/" method="post">
+        <form class="pure-form-stacked" action="/pets/" method="post">
             <legend>Add a pet</legend>
             <fieldset>
             <input id="pname" type="text" name="pname" value="" placeholder="Enter pet name">
@@ -53,7 +53,7 @@
                 <td><%= data[i].category%></td>
                 <td><%= data[i].special_requirements%></td>
                 <td>
-                    <form action="/users/dashboard/pets/delete" method="post">
+                    <form action="/pets/delete" method="post">
                         <input id="pname" type="hidden" name="pname" value="<%= data[i].pname %>">
                         <input type="submit" value="DELETE">
                     </form>
