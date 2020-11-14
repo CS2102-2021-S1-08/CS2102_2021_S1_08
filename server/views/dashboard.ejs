@@ -4,29 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <title>Dashboard</title>
 </head>
 
 <body>
-    <a href="/users/logout">Logout</a>
-    <h1>Dashboard</h1>
-    <h4>Hello <%= user %></h4>
-    <h4>Account Type: <%=account%></h4>
-    <h4>Available functionalities:</h4>
-    <% if (account == "pet_owner" || account =="both") { %>
-        <h3>
-            <a href="/users/dashboard/pets">Pet</a>
-        </h3>
-    <% } %>
-    <% if (account == "care_taker" || account =="both") { %>
-        <h3>
-            <a href="/availability">Availabilities</a>
-            <a href="/leave">Leaves</a>
-        </h3>
-    <% } %>
-    <a href="/users/dashboard/bids">Bids</a>
+    <div>
+        <ul class="horizontal">
+            <li><a href="/users/dashboard">Home</a></li>
+            <li style="float:right"><a href="/users/logout">Logout</a></li>
+            <li style="float:right"><div>Logged in as <%= user %></div></li>
 
+        </ul>
+    </div>
+    <div class="content">
+        <h2>Welcome to whatever this is</h2>
+        <h4>Account Type: <%=account%></h4>
+        <% if (account == "pet_owner" || account =="both") { %>
+            <h3>
+                As a pet owner you can: <br>
+                <a href="/pets">Manage your pets</a><br>
+                <a href="/users/dashboard/bids">Bid for service</a>
+            </h3>
+        <% } %>
+        <% if (account == "care_taker" || account =="both") { %>
+            <h3>
+                As a care taker you can:
+                <a href="/availability">Manage Availability</a>
+                <a href="/leave">Manage leaves</a>
+                <a href="/users/dashboard/bids">Check your bids</a>
+            </h3>
+        <% } %>
+    </div>
 </body>
 
 </html>
