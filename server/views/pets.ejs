@@ -4,49 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <title>PetCareService</title>
 </head>
 
 <body>
-    <a href="/users/dashboard">Back</a>
-    <h1>Dashboard</h1>
-    <h4>Hello <%= user %></h4>
-    <div style="width:800px;">
-        <div style="width:300px; float:left;">
-        <h4>Add a pet: </h4>
-        <form action="/users/dashboard/pets/" method="post">
-            <label for="pname">Enter pet name: </label>
-            <input id="pname" type="text" name="pname" value="">
-            <label for="Profile">Enter pet profile: </label>
-            <input id="profile" type="text" name="profile" value="">
-            <label for="category">Enter pet category: </label>
-            <input id="category" type="text" name="category" value="Category">
-            <label for="special_requirements">Enter special req: </label>
-            <input id="special_requirements" type="text" name="special_requirements" value="">
-            <input type="submit" value="OK">
-        </form>
-        </div>
-        <div style="width:300px; float:right;">
-        <div class="form-header">
-            <h4>Delete a pet: </h4>
-        </div>
-        <form action="/users/dashboard/pets/delete/" method="post">
-            <label for="pname">Enter pet name: </label>
-            <input id="pname" type="text" name="pname" value="">
-            <input type="submit" value="OK">
-        </form>
-        </div>
+    <div>
+        <ul class="horizontal">
+            <li><a href="/users/dashboard">Home</a></li>
+            <li style="float:right"><a href="/users/logout">Logout</a></li>
+            <li style="float:right"><div>Logged in as <%= user %></div></li>
+
+        </ul>
     </div>
+     
+    <div class="content">
+    <div>
+        <form class="pure-form-stacked" action="/pets/" method="post">
+            <legend>Add a pet</legend>
+            <fieldset>
+            <input id="pname" type="text" name="pname" value="" placeholder="Enter pet name">
+            <input id="profile" type="text" name="profile" value="" placeholder="Enter pet profile">
+            <input id="category" type="text" name="category" value="" placeholder="Enter pet category">
+            <input id="special_requirements" type="text" name="special_requirements" value="" placeholder="Enter special reqs (if any)">
+            <input type="submit" value="OK">
+            </fieldset>
+        </form>
+    </div>
+
     <div style="clear: both;"></div>
     <h4>Your Pets</h4>
-    <table class="table">
+    <table class="pure-table pure-table-bordered">
         <thead>
         <tr>
             <th scope="col">Pet name</th>
             <th scope="col">Profile</th>
             <th scope="col">Category</th>
             <th scope="col">Special Requirements</th>
+            <th scope="col">Delete</th>
         </tr>
         </thead>
         <tbody>
@@ -56,10 +52,17 @@
                 <td><%= data[i].profile%></td>
                 <td><%= data[i].category%></td>
                 <td><%= data[i].special_requirements%></td>
+                <td>
+                    <form action="/pets/delete" method="post">
+                        <input id="pname" type="hidden" name="pname" value="<%= data[i].pname %>">
+                        <input type="submit" value="DELETE">
+                    </form>
+                </td>
             </tr>
         <% } %>
         </tbody>
     </table>
+    </div>
 </body>
 
 </html>

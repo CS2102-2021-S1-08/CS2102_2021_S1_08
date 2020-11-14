@@ -11,24 +11,66 @@
 
 const { pool } = require("../dbConfig");
 
-// GET
-// function getUser(username) {
-//     let result = []
+function createPCSAdmin(username, password) {
+  return pool.query(
+    `INSERT INTO pcs_admins(username, password)
+    VALUES ($1, $2)
+    RETURNING username, password`, [username, password]
+  );
+}
 
-//     pool.query(`
-//       SELECT * FROM users
-//       WHERE username = $1
-//       `,
-//         [username],
-//         (err, res) => {
-//             if (err) {
-//                 console.error('Error executing query', err.stack)
-//             }
-//             result = res;
-//         })
+function createUser(username, password, usertype) {
+  return (async () => {
+    const client = await pool.connect()
+    let res = {};
+    try {
+      await client.query('BEGIN')
+      res = await client.query(`
+        INSERT INTO users (username, password)
+        VALUES ($1, $2)
+        RETURNING username, password`,
+        [username, password])
+      
+      if (usertype.petowner) {
+        res = await client.query(`
+          INSERT INTO pet_owners (username)
+          VALUES ($1)
+          RETURNING username
+        `, [username])
+      }
+      
+      if (usertype.caretaker) {
+        res = await client.query(`
+            INSERT INTO care_takers (username)
+            VALUES ($1)
+            RETURNING username
+          `, [username])
+        if (usertype.fulltime) {
+          res = await client.query(`
+            INSERT INTO full_timers (username)
+            VALUES ($1)
+            RETURNING username
+          `, [username])
+        } else {
+          res = await client.query(`
+            INSERT INTO part_timers (username)
+            VALUES ($1)
+            RETURNING username
+          `, [username])
+        }
+      }
+       
+      await client.query('COMMIT')
 
-//     return result
-// }
+      return res;
+    } catch (e) {
+      await client.query('ROLLBACK');
+      throw e;
+    } finally {
+      client.release();
+    }
+  })();
+}
 
 function getUserType(username) {
     return pool.query(`
@@ -45,3 +87,5 @@ function getUserType(username) {
 
 // exports.getUser = getUser;
 exports.getUserType = getUserType;
+exports.createUser = createUser;
+exports.createPCSAdmin = createPCSAdmin;

@@ -10,11 +10,23 @@
 
 <body>
     <a href="/users/logout">Logout</a>
-    <a href="/users/dashboard/pets">Pet</a>
-    <a href="/availability">Availabilities</a>
-    <a href="/leave">Leaves</a>
     <h1>Dashboard</h1>
     <h4>Hello <%= user %></h4>
+    <h4>Account Type: <%=account%></h4>
+    <h4>Available functionalities:</h4>
+    <% if (account == "pet_owner" || account =="both") { %>
+        <h3>
+            <a href="/users/dashboard/pets">Pet</a>
+        </h3>
+    <% } %>
+    <% if (account == "care_taker" || account =="both") { %>
+        <h3>
+            <a href="/availability">Availabilities</a>
+            <a href="/leave">Leaves</a>
+        </h3>
+    <% } %>
+    <a href="/availability">Bids</a>
+
 </body>
 
 </html>

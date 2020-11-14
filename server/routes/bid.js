@@ -31,7 +31,7 @@ async function getBidsAsPetOwner(req, res) {
 
 // TODO: Pet owner can place a bid (POST)
 const placeBidAsPetOwner = function (req, res) {
-    let results = await createBid(
+    let results = createBid(
         new Date(req.body.start_date), 
         new Date(req.body.end_date), 
         req.body.category, 
@@ -50,7 +50,7 @@ const placeBidAsPetOwner = function (req, res) {
 
 // TODO: Pet owner can delete a bid (DELETE)
 const deleteBidAsPetOwner = function (req, res) {
-    let results = await deleteBid(
+    let results = deleteBid(
         new Date(req.body.start_date), 
         new Date(req.body.end_date), 
         req.body.category, 
@@ -67,7 +67,7 @@ const deleteBidAsPetOwner = function (req, res) {
 
 // TODO: Pet owner can add a review/rating
 const addReviewAsPetOwner = function (req, res) {
-    let results = await updateReview(
+    let results = updateReview(
         new Date(req.body.start_date), 
         new Date(req.body.end_date), 
         req.body.category, 
@@ -84,7 +84,7 @@ const addReviewAsPetOwner = function (req, res) {
 }
 
 const addRatingAsPetOwner = function (req, res) {
-    let results = await updateRating(
+    let results = updateRating(
         new Date(req.body.start_date), 
         new Date(req.body.end_date), 
         req.body.category, 
@@ -102,7 +102,7 @@ const addRatingAsPetOwner = function (req, res) {
 
 // TODO: Pet owner can modify a review/rating
 const modifyReviewAsPetOwner = function (req, res) {
-    let results = await updateReview(
+    let results = updateReview(
         new Date(req.body.start_date), 
         new Date(req.body.end_date), 
         req.body.category, 
@@ -119,7 +119,7 @@ const modifyReviewAsPetOwner = function (req, res) {
 }
 
 const modifyRatingAsPetOwner = function (req, res) {
-    let results = await updateRating(
+    let results = updateRating(
         new Date(req.body.start_date), 
         new Date(req.body.end_date), 
         req.body.category, 
@@ -137,7 +137,7 @@ const modifyRatingAsPetOwner = function (req, res) {
 
 // TODO: Pet owner can delete a review/rating
 const deleteReviewAsPetOwner = function (req, res) {
-    let results = await deleteReview(
+    let results = deleteReview(
         new Date(req.body.start_date), 
         new Date(req.body.end_date), 
         req.body.category, 
@@ -154,7 +154,7 @@ const deleteReviewAsPetOwner = function (req, res) {
 }
 
 const deleteRatingAsPetOwner = function (req, res) {
-    let results = await deleteRating(
+    let results = deleteRating(
         new Date(req.body.start_date), 
         new Date(req.body.end_date), 
         req.body.category, 
@@ -173,7 +173,7 @@ const deleteRatingAsPetOwner = function (req, res) {
 // TODO: use middleware checkAuthenticaedAsCareTaker
 // TODO: Care Taker can accept a bid (PUT)
 const acceptBidAsCareTaker = function (req, res) {
-    let results = await markBidAsSuccessful(
+    let results = markBidAsSuccessful(
         new Date(req.body.start_date), 
         new Date(req.body.end_date), 
         req.body.category, 

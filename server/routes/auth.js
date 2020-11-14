@@ -7,9 +7,8 @@ const passport = require("passport")
 const { checkAuthenticated, checkNotAuthenticated } = require("../commons/auth")
 const { pool } = require("../dbConfig")
 const dashboard = require("./dashboard")
-const petOwners = require("../models/petOwners")
-const careTakers = require("../models/careTakers")
-const pcsAdmins = require("../models/pcsAdmins")
+const { createPCSAdmin, createUser } = require("../models/users");
+const e = require("express")
 
 const loginGet = function (req, res) {
     res.render('login')
@@ -41,6 +40,13 @@ const registerPost = async function (req, res) {
         confirm_password,
         type
     })
+
+    let usertype = {
+        admin: type === 'admin',
+        petowner: type === 'petowner' || type === 'petownerandfulltimer' || type === 'petownerandparttimer',
+        caretaker: type === 'fulltimer' || type === 'parttimer' || type === 'petownerandfulltimer' || type === 'petownerandparttimer',
+        fulltime: type === 'fulltimer' || type === 'petownerandfulltimer'
+    }
 
     let errors = []
 
@@ -74,43 +80,24 @@ const registerPost = async function (req, res) {
                     errors.push({ message: "The username is already taken" })
                     res.render('register', { errors })
                 } else {
-                    pool.query(
-                        `INSERT INTO users (username, password)
-                    VALUES ($1, $2)
-                    RETURNING username, password`, [username, password], (err, results) => {
-                        if (err) {
-                            console.log(err)
-                        }
-                        console.log(results.rows)
-                        req.flash('success_msg', "You are now registered. Please log in")
-                        res.redirect('/users/login')
-                    }
-                    )
-
-                    switch (type) {
-                        case 'petOwner':
-                            petOwners.putPetOwner(username)
-                            break;
-                        case 'fullTimer':
-                            careTakers.putFullTimer(username)
-                            break;
-                        case 'partTimer':
-                            careTakers.putPartTimer(username)
-                            break;
-                        case 'both_fullTimer':
-                            petOwners.putPetOwner(username)
-                            careTakers.putFullTimer(username)
-                            break;
-                        case 'both_partTimer':
-                            petOwners.putPetOwner(username)
-                            careTakers.putPartTimer(username)
-                            break;
-                        case 'admin':
-                            pcsAdmins.putPcsAdmin(username);
-                            break;
+                    if (usertype.admin) {
+                        createPCSAdmin(username, password).then(results => {
+                            console.log(results.rows)
+                            req.flash('success_msg', "You are now registered. Please log in")
+                            res.redirect('/users/login')
+                        }).catch(err => {
+                            res.render('error', { message: "Error", error: err })
+                        });
+                    } else {
+                        createUser(username, password, usertype).then(results => {
+                            console.log(results.rows)
+                            req.flash('success_msg', "You are now registered. Please log in")
+                            res.redirect('/users/login')
+                        }).catch(err => {
+                            res.render('error', { message: "Error", error: err })
+                        });
                     }
                 }
-
             }
         )
     }

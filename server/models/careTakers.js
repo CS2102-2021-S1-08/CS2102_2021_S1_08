@@ -8,27 +8,6 @@
 const { pool } = require("../dbConfig");
 
 // GET
-function getCareTaker(username) {
-  let result = [];
-
-  pool.query(
-    `
-      SELECT * FROM care_takers
-      WHERE username = $1
-      `,
-    [username],
-    (err, res) => {
-      if (err) {
-        console.error("Error executing query", err.stack);
-      }
-      result = res;
-    }
-  );
-
-  return result;
-}
-
-// GET
 // NOTE: need to change full_timers table to another
 exports.getCareTakerTotalPetDays = async function (username) {
   const query = `
@@ -112,36 +91,7 @@ exports.getCareTakerTotalSalary = async function (username) {
   }
 };
 
-// PUT
-function putFullTimer(username) {
-  return pool.query(
-    `INSERT INTO full_timers (username)
-    VALUES ($1)
-    RETURNING username`,
-    [username],
-    (err, res) => {
-      if (err) {
-        console.error("Error executing query", err.stack);
-      }
-      console.log(res.rows);
-    }
-  );
-}
 
-function putPartTimer(username) {
-  return pool.query(
-    `INSERT INTO part_timers (username)
-    VALUES ($1)
-    RETURNING username`,
-    [username],
-    (err, res) => {
-      if (err) {
-        console.error("Error executing query", err.stack);
-      }
-      console.log(res.rows);
-    }
-  );
-}
 
 exports.getAllBids = async function (username) {
     const query = `
@@ -160,7 +110,3 @@ exports.getAllBids = async function (username) {
         console.log(err.stack);
     }
 }
-// DELETE
-exports.getCareTaker = getCareTaker;
-exports.putFullTimer = putFullTimer;
-exports.putPartTimer = putPartTimer;

@@ -11,7 +11,7 @@ exports.get = function getAllPets(username) {
     return pool.query(`
         SELECT pname, profile, category, special_requirements
         FROM pets
-        WHERE pname = $1::text
+        WHERE poname = $1::text
         `,
         [username]
     )
@@ -31,7 +31,7 @@ exports.post = function createPet(username, pname, profile, category, special_re
 exports.delete = function deletePet(username, pname) {
     return pool.query(`
         DELETE FROM pets
-        WHERE (username = $1::text AND pname = $2::text)
+        WHERE (poname = $1::text AND pname = $2::text)
         `,
             [username, pname]
     )
