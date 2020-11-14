@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <title>PetCareService</title>
+</head>
+
+<body>
+    <div>
+        <ul class="horizontal">
+            <li><a href="/users/dashboard">Home</a></li>
+            <li style="float:right"><a href="/users/logout">Logout</a></li>
+            <li style="float:right"><div>Logged in as <%= user %></div></li>
+
+        </ul>
+    </div>
+        
+    <div class="content">
+    <div style="clear: both;"></div>
+    
+    <h4>Your Pending Bids</h4>
+    <table class="pure-table pure-table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">Pet Owner</th>
+            <th scope="col">Pet name</th>
+            <th scope="col">Pet category</th>
+            <th scope="col">Bid Date</th>
+            <th scope="col">Accept?</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for(var i=0; i<data.length; i++) { %>
+            <tr>
+                <td><%= data[i].poname%></td>
+                <td><%= data[i].pname%></td>
+                <td><%= data[i].category%></td>
+                <td><%= data[i].bid_date%></td>
+                <td>
+                    <form action="/bid/careTaker/update" method="post">
+                        <input id="start_date" type="hidden" name="start_date" value="<%= data[i].start_date %>">
+                        <input id="end_date" type="hidden" name="end_date" value="<%= data[i].end_date %>">
+                        <input id="category" type="hidden" name="category" value="<%= data[i].category %>">
+                        <input id="poname" type="hidden" name="poname" value="<%= data[i].poname %>">
+                        <input id="pname" type="hidden" name="pname" value="<%= data[i].pname %>">
+                        <input id="ctuname" type="hidden" name="ctuname" value="<%= data[i].ctuname %>">
+                        <input id="bid_date" type="hidden" name="bid_date" value="<%= data[i].bid_date %>">
+                        <input id="is_successful" type="hidden" name="is_successful" value=true>
+                        <input type="submit" value="ACCEPT">
+                    </form>
+                </td>
+            </tr>
+        <% } %>
+        </tbody>
+    </table>
+
+    <h4>Your Accepted Bids</h4>
+    <table class="pure-table pure-table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Pet Owner</th>
+                <th scope="col">Pet name</th>
+                <th scope="col">Pet category</th>
+                <th scope="col">Bid Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% for(var i=0; i<data.length; i++) { %>
+                <tr>
+                    <td><%= data[i].poname%></td>
+                    <td><%= data[i].pname%></td>
+                    <td><%= data[i].category%></td>
+                    <td><%= data[i].bid_date%></td>
+                </tr>
+            <% } %>
+            </tbody>
+    </table>
+</body>
+
+</html>

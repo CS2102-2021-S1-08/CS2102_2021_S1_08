@@ -5,7 +5,7 @@
 const { pool } = require("../dbConfig");
 
 // GET BID
-function getBidAsPetOwner(poname) {
+function getBidsForPetOwner(poname) {
   return pool.query(`
     SELECT *
     FROM bids
@@ -14,6 +14,16 @@ function getBidAsPetOwner(poname) {
     [poname]
   )
 }
+
+function getBidsForCareTaker(ctuname) {
+  return pool.query(`
+    SELECT *
+    FROM bids
+    WHERE ctuname = $1::text
+    `,
+    [ctuname]
+  )
+} 
 
 // POST BID
 function createBid(start_date, end_date, category, poname, pname, ctuname, bid_date) {
@@ -26,75 +36,59 @@ function createBid(start_date, end_date, category, poname, pname, ctuname, bid_d
 }
 
 // DELETE BID
-function deleteBid(start_date, end_date, category, poname, pname, ctuname) {
+function deleteBid(start_date, end_date, category, poname, pname, ctuname, bid_date) {
   return pool.query(`
     DELETE FROM bids
-    WHERE start_date = $1::date, end_date = $2::date, category = $3::text, poname = $4::text, pname = $5::text, ctuname = $6::text
+    WHERE start_date = $1::date 
+    AND end_date = $2::date
+    AND category = $3::text
+    AND poname = $4::text
+    AND pname = $5::text
+    AND ctuname = $6::text
+    AND bid_date = $7::date
     `,
-    [start_date, end_date, category, poname, pname, ctuname]
+    [start_date, end_date, category, poname, pname, ctuname, bid_date]
   )
 }
 
-// DELETE REVIEW
-function deleteReview(start_date, end_date, category, poname, pname, ctuname) {
+// UPDATE BID
+function updateBidForPetOwner(start_date, end_date, category, poname, pname, ctuname, bid_date, review, rating) {
   return pool.query(`
     UPDATE bids
-    SET review = null
-    WHERE start_date = $1::date, end_date = $2::date, category = $3::text, poname = $4::text, pname = $5::text, ctuname = $6::text
+    SET 
+    review = $8::text,
+    rating = $9::int
+    WHERE start_date = $1::date 
+    AND end_date = $2::date
+    AND category = $3::text
+    AND poname = $4::text
+    AND pname = $5::text
+    AND ctuname = $6::text
+    AND bid_date = $7::date
     `,
-    [start_date, end_date, category, poname, pname, ctuname]
+    [start_date, end_date, category, poname, pname, ctuname, bid_date, review, rating]
   )
 }
 
-// DELETE RATING
-function deleteRating(start_date, end_date, category, poname, pname, ctuname) {
+function updateBidForCareTaker(start_date, end_date, category, poname, pname, ctuname, is_successful) {
   return pool.query(`
     UPDATE bids
-    SET rating = null
-    WHERE start_date = $1::date, end_date = $2::date, category = $3::text, poname = $4::text, pname = $5::text, ctuname = $6::text
+    SET is_successful = $8::boolean
+    WHERE start_date = $1::date 
+    AND end_date = $2::date
+    AND category = $3::text
+    AND poname = $4::text
+    AND pname = $5::text
+    AND ctuname = $6::text
+    AND bid_date = $7::date
     `,
-    [start_date, end_date, category, poname, pname, ctuname]
+    [start_date, end_date, category, poname, pname, ctuname, bid_date, is_successful]
   )
 }
 
-// UPDATE REVIEW
-function updateReview(start_date, end_date, category, poname, pname, ctuname, review) {
-  return pool.query(`
-    UPDATE bids
-    SET review = $7::text
-    WHERE start_date = $1::date, end_date = $2::date, category = $3::text, poname = $4::text, pname = $5::text, ctuname = $6::text
-    `,
-    [start_date, end_date, category, poname, pname, ctuname, review]
-  )
-}
-
-// UPDATE RATING
-function updateRating(start_date, end_date, category, poname, pname, ctuname, rating) {
-  return pool.query(`
-    UPDATE bids
-    SET rating = $7::int
-    WHERE start_date = $1::date, end_date = $2::date, category = $3::text, poname = $4::text, pname = $5::text, ctuname = $6::text
-    `,
-    [start_date, end_date, category, poname, pname, ctuname, rating]
-  )
-}
-
-// MARK BID AS SUCCESSFUL
-function markBidAsSuccessful(start_date, end_date, category, poname, pname, ctuname) {
-  return pool.query(`
-    UPDATE bids
-    SET is_successful = true
-    WHERE start_date = $1::date, end_date = $2::date, category = $3::text, poname = $4::text, pname = $5::text, ctuname = $6::text
-    `,
-    [start_date, end_date, category, poname, pname, ctuname]
-  )
-}
-
-exports.getBidAsPetOwner = getBidAsPetOwner;
+exports.getBidsForPetOwner = getBidsForPetOwner;
+exports.getBidsForCareTaker = getBidsForCareTaker;
 exports.createBid = createBid;
 exports.deleteBid = deleteBid;
-exports.updateRating = updateRating;
-exports.deleteRating = deleteRating;
-exports.updateReview = updateReview;
-exports.deleteReview = deleteReview;
-exports.markBidAsSuccessful = markBidAsSuccessful;
+exports.updateBidForCareTaker = updateBidForCareTaker;
+exports.updateBidForPetOwner = updateBidForPetOwner;

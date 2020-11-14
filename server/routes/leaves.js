@@ -12,7 +12,7 @@ function getController(req, res) {
       res.render('leave', { user: req.user.username, data: data.rows })
     })
     .catch(err => {
-      res.render('error', { error: err })
+      res.render('error', { message: "Error", error: err })
     });
 }
 

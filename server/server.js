@@ -12,6 +12,7 @@ const leaveRouter = require("./routes/leaves");
 const careTakerRouter = require("./routes/careTakers");
 const summaryRouter = require("./routes/summary");
 const petRouter = require("./routes/pet");
+const bidRouter = require("./routes/bid");
 const { checkNotAuthenticated } = require("./commons/auth");
 
 initializePassport(passport);
@@ -45,6 +46,7 @@ app.use("/users", authRouter);
 app.use("/availability", checkNotAuthenticated, availabilityRouter);
 app.use("/basePrice", checkNotAuthenticated, basePriceRouter);
 app.use("/leave", checkNotAuthenticated, leaveRouter);
+app.use("/bid", checkNotAuthenticated, bidRouter);
 app.use("/caretaker", checkNotAuthenticated, careTakerRouter);
 app.use('/pets', checkNotAuthenticated, petRouter)
 app.use("/monthlysummary", checkNotAuthenticated, summaryRouter);
