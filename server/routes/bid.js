@@ -11,9 +11,9 @@ const {
   const { getAllAvailabilitiesForPetOwner } = require("../models/availability")
 
   function getAvailabilitiesForPetOwnerController(req, res) {
-    getAllAvailabilitiesForPetOwner(req.user.username, req.body.bid_date, req.body.category)
+    getAllAvailabilitiesForPetOwner(req.user.username, new Date(req.body.bid_date), req.body.category)
         .then(data => {
-            res.render('bidFindAvailability', { user: req.user.username, usertype: req.user.usertype, data: data.rows })
+            res.render('bidFindAvailability', { user: req.user.username, usertype: req.user.usertype, data: data.rows, bid_date: req.body.bid_date })
         })
         .catch(err => {
             res.render('error',  { message: "Error", error: err })

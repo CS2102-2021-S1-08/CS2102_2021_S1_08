@@ -85,16 +85,16 @@
         <tbody>
         <% for(var i=0; i<data.length; i++) { %>
             <tr>
-                <td><%= data[i].ctuname%></td>
+                <td><%= data[i].username%></td>
                 <td>
                     <form action="/bid/petOwner" method="post">
                       <input id="start_date" type="hidden" name="start_date" value="<%= data[i].start_date %>">
                       <input id="end_date" type="hidden" name="end_date" value="<%= data[i].end_date %>">
                       <input id="category" type="hidden" name="category" value="<%= data[i].category %>">
-                      <input id="poname" type="hidden" name="poname" value="<%= data[i].poname %>">
-                      <input id="pname" type="hidden" name="pname" value="<%= data[i].pname %>">
-                      <input id="ctuname" type="hidden" name="ctuname" value="<%= data[i].ctuname %>">
-                      <input id="bid_date" type="hidden" name="bid_date" value="<%= data[i].bid_date %>">
+                      <input id="poname" type="hidden" name="poname" value="<%= user %>">
+                      <input id="pname" type="text" name="pname" value="" placeholder="Your pet name here">
+                      <input id="ctuname" type="hidden" name="ctuname" value="<%= data[i].username %>">
+                      <input id="bid_date" type="hidden" name="bid_date" value="<%= bid_date %>">
                       <input type="submit" value="Add">
                     </form>
                 </td>
