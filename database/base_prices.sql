@@ -25,6 +25,5 @@ insert into base_prices (category, price) values ('cockatiel', 16);
 insert into base_prices (category, price) values ('finch', 15);
 insert into base_prices (category, price) values ('rat', 30);
 insert into base_prices (category, price) values ('quail', 18);
-insert into base_prices (category, price) values ('gerbil', 18);
 insert into base_prices (category, price) values ('green anole', 14);
 insert into base_prices (category, price) values ('chicken', 20);
