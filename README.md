@@ -27,4 +27,4 @@ Final project report and constraints are [in the docs/ folder.](./docs)
 
 ## Demo
 
-[Demo link](bit.ly/35tJkK7)
+[Demo link](https://bit.ly/3pCOPP1)
